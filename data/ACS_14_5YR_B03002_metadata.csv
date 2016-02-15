@@ -1,0 +1,45 @@
+GEO.id,Id
+GEO.id2,Id2
+GEO.display-label,Geography
+HD01_VD01,Estimate; Total:
+HD02_VD01,Margin of Error; Total:
+HD01_VD02,Estimate; Not Hispanic or Latino:
+HD02_VD02,Margin of Error; Not Hispanic or Latino:
+HD01_VD03,Estimate; Not Hispanic or Latino: - White alone
+HD02_VD03,Margin of Error; Not Hispanic or Latino: - White alone
+HD01_VD04,Estimate; Not Hispanic or Latino: - Black or African American alone
+HD02_VD04,Margin of Error; Not Hispanic or Latino: - Black or African American alone
+HD01_VD05,Estimate; Not Hispanic or Latino: - American Indian and Alaska Native alone
+HD02_VD05,Margin of Error; Not Hispanic or Latino: - American Indian and Alaska Native alone
+HD01_VD06,Estimate; Not Hispanic or Latino: - Asian alone
+HD02_VD06,Margin of Error; Not Hispanic or Latino: - Asian alone
+HD01_VD07,Estimate; Not Hispanic or Latino: - Native Hawaiian and Other Pacific Islander alone
+HD02_VD07,Margin of Error; Not Hispanic or Latino: - Native Hawaiian and Other Pacific Islander alone
+HD01_VD08,Estimate; Not Hispanic or Latino: - Some other race alone
+HD02_VD08,Margin of Error; Not Hispanic or Latino: - Some other race alone
+HD01_VD09,Estimate; Not Hispanic or Latino: - Two or more races:
+HD02_VD09,Margin of Error; Not Hispanic or Latino: - Two or more races:
+HD01_VD10,Estimate; Not Hispanic or Latino: - Two or more races: - Two races including Some other race
+HD02_VD10,Margin of Error; Not Hispanic or Latino: - Two or more races: - Two races including Some other race
+HD01_VD11,"Estimate; Not Hispanic or Latino: - Two or more races: - Two races excluding Some other race, and three or more races"
+HD02_VD11,"Margin of Error; Not Hispanic or Latino: - Two or more races: - Two races excluding Some other race, and three or more races"
+HD01_VD12,Estimate; Hispanic or Latino:
+HD02_VD12,Margin of Error; Hispanic or Latino:
+HD01_VD13,Estimate; Hispanic or Latino: - White alone
+HD02_VD13,Margin of Error; Hispanic or Latino: - White alone
+HD01_VD14,Estimate; Hispanic or Latino: - Black or African American alone
+HD02_VD14,Margin of Error; Hispanic or Latino: - Black or African American alone
+HD01_VD15,Estimate; Hispanic or Latino: - American Indian and Alaska Native alone
+HD02_VD15,Margin of Error; Hispanic or Latino: - American Indian and Alaska Native alone
+HD01_VD16,Estimate; Hispanic or Latino: - Asian alone
+HD02_VD16,Margin of Error; Hispanic or Latino: - Asian alone
+HD01_VD17,Estimate; Hispanic or Latino: - Native Hawaiian and Other Pacific Islander alone
+HD02_VD17,Margin of Error; Hispanic or Latino: - Native Hawaiian and Other Pacific Islander alone
+HD01_VD18,Estimate; Hispanic or Latino: - Some other race alone
+HD02_VD18,Margin of Error; Hispanic or Latino: - Some other race alone
+HD01_VD19,Estimate; Hispanic or Latino: - Two or more races:
+HD02_VD19,Margin of Error; Hispanic or Latino: - Two or more races:
+HD01_VD20,Estimate; Hispanic or Latino: - Two or more races: - Two races including Some other race
+HD02_VD20,Margin of Error; Hispanic or Latino: - Two or more races: - Two races including Some other race
+HD01_VD21,"Estimate; Hispanic or Latino: - Two or more races: - Two races excluding Some other race, and three or more races"
+HD02_VD21,"Margin of Error; Hispanic or Latino: - Two or more races: - Two races excluding Some other race, and three or more races"
