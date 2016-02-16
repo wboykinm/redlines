@@ -30,3 +30,4 @@ _[scratchpad](processing/community_map_steps.sql)_
  - In majority-black census blocks, "American" ancestry refers almost exclusively to African-Americans.
  - The "Mixed" racial group in a block is adequately represented by the largest ancestral group in the containing tract.
  - "Hispanic/Latino" can be [represented as a race-like category](http://censusreporter.org/topics/race-hispanic/)
+ - Margin of error can be ignored

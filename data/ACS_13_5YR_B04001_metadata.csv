@@ -163,8 +163,8 @@ HD01_VD80,Estimate; Total: - Subsaharan African: - Senegalese
 HD02_VD80,Margin of Error; Total: - Subsaharan African: - Senegalese
 HD01_VD81,Estimate; Total: - Subsaharan African: - Sierra Leonean
 HD02_VD81,Margin of Error; Total: - Subsaharan African: - Sierra Leonean
-HD01_VD82,Estimate; Total: - Subsaharan African: - Somali
-HD02_VD82,Margin of Error; Total: - Subsaharan African: - Somali
+HD01_VD82,Estimate; Total: - Subsaharan African: - Somalian
+HD02_VD82,Margin of Error; Total: - Subsaharan African: - Somalian
 HD01_VD83,Estimate; Total: - Subsaharan African: - South African
 HD02_VD83,Margin of Error; Total: - Subsaharan African: - South African
 HD01_VD84,Estimate; Total: - Subsaharan African: - Sudanese
@@ -217,3 +217,5 @@ HD01_VD107,Estimate; Total: - Yugoslavian
 HD02_VD107,Margin of Error; Total: - Yugoslavian
 HD01_VD108,Estimate; Total: - Other groups
 HD02_VD108,Margin of Error; Total: - Other groups
+HD01_VD109,Estimate; Total: - Unclassified or not reported
+HD02_VD109,Margin of Error; Total: - Unclassified or not reported
