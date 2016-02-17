@@ -70,6 +70,9 @@ UPDATE block_final SET main_race_fraction = 0 WHERE block_total = 0;
 ALTER TABLE block_final ADD COLUMN main_aggregate text;
 UPDATE block_final SET main_aggregate =
   CASE
+    
+  
+  
     WHEN main_race = 'white' THEN main_ancestry
     WHEN main_race = 'hispanic_latino' THEN main_ancestry
     WHEN main_race = 'asian' THEN main_ancestry
