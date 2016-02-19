@@ -17,6 +17,13 @@ A map of aggregate racial/ancestral groups based on [a 1950 map of Chicago](http
  6. Expand block boundaries by 250m, dissolve, then erode by 275m for cartographic effect
  7. Map [according to original style](cartography/chicago_demographics.mss)
  
+## Usage
+In theory this will work for any county in the country. [Set location parameters here](build_communities.sh#L6-L9), then:
+
+```bash
+bash build_communities.sh
+```
+ 
 ## Assumptions (a running list)
  - __Meta-assumption: ancestry can be inferred by race.__ This is a dramatic oversimplification, to say the least.
  - The largest ancestral group in a tract is related to the largest racial group in a block contained by that tract.
