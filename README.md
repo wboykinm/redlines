@@ -18,6 +18,14 @@ A map of aggregate racial/ancestral groups based on [a 1950 map of Chicago](http
  7. Map [according to original style](cartography/chicago_demographics.mss)
  
 ## Usage
+
+### Requirements
+
+- PosgreSQL w/ PostGIS
+- node.js
+- GDAL/OGR
+- Census API key
+
 In theory this will work for any county in the country. [Set location parameters here](build_communities.sh#L6-L9), then:
 
 ```bash
