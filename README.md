@@ -9,7 +9,7 @@ A map of aggregate racial/ancestral groups based on [a 1950 map of Chicago](http
  - [Zillow neighborhoods](data/zillow_neighborhoods.geojson)
  
 ## Processing steps
- 1. [Get geodata](processing/build_communities.sh)
+ 1. [Get geodata](build_communities.sh)
  2. [Hit the Census API for tabular data](processing/pull/index.js)
  3. Add `community` aggregate field, populated with largest ancestry/racial/ethnic group in each census tract by proportion of the population; retain proportion stats
  4. Join tract geometries, `community`, ancestry and race tables on geoid
