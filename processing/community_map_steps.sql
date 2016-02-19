@@ -1,4 +1,8 @@
--- collect largest ancestry group in each tract
+-- Import
+
+-- 
+
+-- Collect largest ancestry group in each tract
 CREATE TABLE tract_groups AS (
   SELECT DISTINCT ON (id2) id2, max_type, max_value,total
   FROM (
@@ -12,7 +16,7 @@ CREATE TABLE tract_groups AS (
   ORDER BY id2, max_value DESC
 );
 
--- combine ancestry and race at the block level
+-- Combine ancestry and race at the block level
 CREATE TABLE block_parties AS (
   SELECT 
     b.ogc_fid,
@@ -70,9 +74,6 @@ UPDATE block_final SET main_race_fraction = 0 WHERE block_total = 0;
 ALTER TABLE block_final ADD COLUMN main_aggregate text;
 UPDATE block_final SET main_aggregate =
   CASE
-    
-  
-  
     WHEN main_race = 'white' THEN main_ancestry
     WHEN main_race = 'hispanic_latino' THEN main_ancestry
     WHEN main_race = 'asian' THEN main_ancestry
