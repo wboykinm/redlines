@@ -6,7 +6,7 @@ A map of aggregate racial/ancestral groups based on [a 1950 map of Chicago](http
 ## Background
 This is a tough map to recreate with 21st century data. The reason for using an aggregate approach is that the census [only reports ancestry for slightly more than half of the US population](http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_5YR_B04001&prodType=table), including in configurations that fail to represent whole racial/ethnic groups, which are in turn detailed on other tables. In order to capture the conceptual spirit and geographic detail of the original map, it is worthwhile to combine the two in the most-representative way possible. 
 
-This map draws from [142 distinct ancestry/race/ethnicity/origin categories from across 5 census tables](data/census_community_fields.csv).
+This map draws from [99 distinct ancestry/race/ethnicity/origin categories from across 5 census tables](data/census_community_fields.csv).
 
 ## Data sources
  - [Census TIGER geographic boundaries - tract-level](data/cook_county_blocks.geojson)
@@ -29,6 +29,7 @@ This map draws from [142 distinct ancestry/race/ethnicity/origin categories from
 - PosgreSQL w/ PostGIS
 - node.js
 - GDAL/OGR
+- csvkit
 - Census API key
 
 In theory this will work for any county in the country. [Set location parameters here](build_communities.sh#L6-L9), then:

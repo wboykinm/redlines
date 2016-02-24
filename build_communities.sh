@@ -29,7 +29,27 @@ ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities
 echo 'getting ancestry and race data'
 cd ../../processing/pull
 npm install
-node index.js
+echo 'getting decennial census data'
+node index.js sf1
+echo 'getting american community survey data'
+node index.js acs5
+
+cd ../../data/tmp/
+csvjoin -c "tract" sf1.csv acs5.csv > community_attributes.csv
+# reorder for slicing
+csvcut -c 49-51,1-48,52-104 community_attributes.csv > community_attributes_ordered.csv
+
+echo 'identifying the largest group in each tract'
+cd ../../processing/parse
+npm install
+node index.js ../../data/tmp/community_attributes_ordered.csv
+
+echo 'joining literate group names'
+
+
+echo 'joining attributes to tract boundaries'
+
+echo 'dissolving and eroding community boundaries'
 
 echo 'exporting final geojson'
 ogr2ogr -f "GeoJSON" demographic_groups.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from demographic_groups"
