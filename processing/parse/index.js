@@ -4,7 +4,7 @@ var csv = require('fast-csv');
 var through2 = require('through2');
 
 var inFile = process.argv[2];
-var outFile = 'parsed_' + inFile
+var outFile = inFile + '.tmp'
 var outStream = fs.createWriteStream(outFile);
 
 var getMax = function(row, callback) {
