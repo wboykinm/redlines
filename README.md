@@ -24,13 +24,15 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  
 ## Usage
 
+`bash build_communities.sh`
+_(parameters forthcoming)_
+
 ### Requirements
 
-- PosgreSQL w/ PostGIS
-- node.js
-- GDAL/OGR
-- csvkit
-- Census API key
+- [node.js](https://nodejs.org/en/)
+- [GDAL/OGR](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries)
+- [csvkit](http://csvkit.readthedocs.org/en/540/)
+- Census [API key](http://api.census.gov/data/key_signup.html)
 
 In theory this will work for any county in the country. [Set location parameters here](build_communities.sh#L6-L9), then:
 
