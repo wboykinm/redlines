@@ -19,7 +19,7 @@ CREATE TABLE community_polys AS (
               250
             )
           ),
-          -500
+          -400
         ),
         4326
       ) AS the_geom
