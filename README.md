@@ -14,9 +14,9 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  - [Zillow neighborhoods](data/zillow_neighborhoods.geojson)
  
 ## Processing steps
- 1. [Get geodata](build_communities.sh)
- 2. [Hit the Census API for tabular data](processing/pull/index.js)
- 3. Add `community` aggregate field, populated with largest ancestry/racial/ethnic group in each census tract by proportion of the population; retain proportion stats
+ 1. [Hit the Census API for tabular data](processing/pull/index.js)]
+ 2. Add `largest_group` aggregate field, populated with largest ancestry/racial/ethnic group in each census tract by proportion of the population; retain proportion stats
+ 3. Get geodata
  4. Join tract geometries, `community`, ancestry and race tables on geoid
  5. Delete empty tracts
  6. Expand block boundaries by 250m, dissolve, then erode by 275m for cartographic effect
