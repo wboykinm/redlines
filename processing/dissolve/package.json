@@ -1,0 +1,21 @@
+
+{
+  "name": "turf-dissolve",
+  "version": "0.1.0",
+  "description": "Dissolves polygons based on an attribute",
+  "main": "index.js",
+  "keywords": [
+    "turf",
+    "dissolve",
+    "gis"
+  ],
+  "author": "Rowan Winsemius",
+  "license": "MIT",
+  "dependencies": {
+    "rbush": "^1.4.2",
+    "turf-extent": "^1.0.4",
+    "turf-featurecollection": "^1.0.1",
+    "turf-merge": "^1.0.2",
+    "turf-overlaps": "^1.0.3"
+  }
+}

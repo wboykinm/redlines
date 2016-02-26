@@ -6,12 +6,12 @@ var request = require('request');
 
 var collectionType = process.argv[2];
 var urlBase = 'http://api.census.gov/data/2010/';
-var censusKey = '2651a9a403259ff8068723199a90b3060fd0127f';
-var stateFips = '17';
-var countyFips = '031';
+var censusKey = process.argv[3];
+var stateFips = process.argv[4];
+var countyFips = process.argv[5];
 var fields = [];
 
-var outFile = fs.createWriteStream('../../data/tmp/' + collectionType + '.csv');
+var outFile = fs.createWriteStream('../../data/tmp_' + stateFips + '_' + countyFips + '/' + collectionType + '.csv');
 
 // get fields from key csv
 csv
