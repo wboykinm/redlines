@@ -24,13 +24,11 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  
 ## Usage
 
-`bash build_communities.sh`
-_(parameters forthcoming)_
-
 ### Requirements
 
 - [node.js](https://nodejs.org/en/)
 - [GDAL/OGR](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries)
+- [turf.js](http://turfjs.org/)
 - [csvkit](http://csvkit.readthedocs.org/en/540/)
 - Census [API key](http://api.census.gov/data/key_signup.html)
 

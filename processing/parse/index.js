@@ -18,9 +18,14 @@ var getMax = function(row, callback) {
     delete row[e];
   };
   extraneous.forEach(remove);
-  
+
   // Find the maximum of those
-  var maxKey = Object.keys(row).reduce(function(a, b){ return row[a] > row[b] ? a : b });
+  var maxKey = Object.keys(row).reduce(function(key,max){
+    return (parseInt(row[key]) > parseInt(row[max])) ? key : max;
+  });
+  /*var maxKey = Object.keys(row).reduce(function(a, b){ 
+    return row[a] > row[b] ? a : b 
+  });*/
   
   // Append to the row:
   rowNew['largest_group'] = maxKey;
