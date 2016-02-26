@@ -65,6 +65,7 @@ ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities
 psql communities -f form.sql
 
 echo 'exporting final geojson'
+rm -f ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson
 ogr2ogr -f "GeoJSON" ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys"
 rm -rf ../../data/tmp/
 
