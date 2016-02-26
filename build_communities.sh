@@ -4,11 +4,11 @@
 # params
 set -eo pipefail
 DATE=`date +%Y_%m_%d`
-STATE_NAME='Illinois'
-STATE_ABBRV='il'
-STATE_FIPS='17'
-COUNTY_FIPS='031'
-CENSUS_KEY='2651a9a403259ff8068723199a90b3060fd0127f'
+STATE_NAME=$1
+STATE_ABBRV=$2
+STATE_FIPS=$3
+COUNTY_FIPS=$4
+CENSUS_KEY=$5
 
 echo 'cleaning house'
 rm -rf data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
@@ -55,7 +55,7 @@ npm install
 cd ../form
 npm install
 node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson
-mv dissolvedTracts.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+mv erodedTracts.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
 
 
 

@@ -32,10 +32,10 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
 - [csvkit](http://csvkit.readthedocs.org/en/540/)
 - Census [API key](http://api.census.gov/data/key_signup.html)
 
-In theory this will work for any county in the country. [Set location parameters here](build_communities.sh#L6-L9), then:
+In theory this will work for any county in the country. Set location parameters as arguments in the order below:
 
 ```bash
-bash build_communities.sh
+bash build_communities.sh <State name> <state abbreviation> <state_fips> <county_fips> <census key>
 ```
  
 ## Assumptions (a running list)
