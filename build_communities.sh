@@ -50,14 +50,22 @@ npm install
 node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
 
 echo 'dissolving and eroding community boundaries'
-cd ../dissolve
-npm install
+# TODO wanted this to be a DB-free joint, but memory limits are hampering turf. PostGIS for now.
+#cd ../dissolve
+#npm install
 cd ../form
-npm install
-node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson
-mv erodedTracts.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
-
-
+#npm install
+#node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson
+#mv erodedTracts.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+dropdb communities
+createdb communities
+psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis"
+psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
+ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
+psql communities -f form.sql
 
 echo 'exporting final geojson'
-#ogr2ogr -f "GeoJSON" demographic_groups.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from demographic_groups"
+ogr2ogr -f "GeoJSON" ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys"
+rm -rf ../../data/tmp/
+
+echo 'done!'

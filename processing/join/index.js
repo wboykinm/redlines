@@ -2,7 +2,7 @@ console.log('starting')
 var fs = require('fs');
 var joiner = require('joiner');
 var csv = require('fast-csv');
-var outFile = '../../data/tmp_' + process.argv[4] + '_' + process.argv[5] + '/community_tracts.geojson';
+var outFile = '../../data/tmp_' + process.argv[4] + '_' + process.argv[5] + '/community_tracts_' + process.argv[5] + '.geojson';
 var geo_key = 'TRACTCE';
 var tab_key = 'tract';
 
