@@ -19,16 +19,16 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  3. Get geodata
  4. Join tract geometries, `community`, ancestry and race tables on geoid
  5. Delete empty tracts
- 6. Expand block boundaries by 250m, dissolve, then erode by 275m for cartographic effect
+ 6. Expand block boundaries by 250m, dissolve, then erode by 500m for cartographic effect
  7. Map [according to original style](cartography/chicago_demographics.mss)
  
 ## Usage
 
-### Requirements
+### Dependencies
 
 - [node.js](https://nodejs.org/en/)
 - [GDAL/OGR](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries)
-- [turf.js](http://turfjs.org/)
+- [PostGIS](http://postgis.org)
 - [csvkit](http://csvkit.readthedocs.org/en/540/)
 - Census [API key](http://api.census.gov/data/key_signup.html)
 
@@ -40,11 +40,10 @@ bash build_communities.sh <State name> <state abbreviation> <state_fips> <county
  
 ## Assumptions (a running list)
  - __Meta-assumption: ancestry can be inferred by race.__ This is a dramatic oversimplification, to say the least.
- - The largest ancestral group in a tract is related to the largest racial group in a block contained by that tract.
- - The [first ancestry reported](http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_5YR_B04001&prodType=table) is admissible as the only ancestry.
+ - Census categories that dance around race, ancestry and ethnicity can be coherently flattened to a non-overlapping set of categories.
+ - Counting multiple races as multiple people is legit, when trying to show community membership.
  - Asian and Hispanic/Latino groups can be represented by race in the absence of ancestral categories encompassing them.
  - In majority-black census blocks, "American" ancestry refers almost exclusively to African-Americans.
  - The "Mixed" racial group in a block is adequately represented by the largest ancestral group in the containing tract.
  - "Hispanic/Latino" can be [represented as a race-like category](http://censusreporter.org/topics/race-hispanic/).
  - Margin of error can be ignored.
- - It's okay that the individual groupings sum to greater than the total.
