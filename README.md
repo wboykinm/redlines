@@ -19,7 +19,7 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  3. Get geodata
  4. Join tract geometries, `community`, ancestry and race tables on geoid
  5. Delete empty tracts
- 6. Expand block boundaries by 250m, dissolve, then erode by 400m for cartographic effect
+ 6. Expand block boundaries by 250m, dissolve, then erode by 325m for cartographic effect
  7. Map [according to original style](cartography/chicago_demographics.mss)
  
 ## Usage
@@ -37,6 +37,12 @@ In theory this will work for any county in the country. Set location parameters 
 ```bash
 bash build_communities.sh <State name> <state abbreviation> <state_fips> <county_fips> <census key>
 ```
+
+e.g. this:
+```
+bash build_communities.sh "New York" ny 36 081 <census_api_key>
+```
+ . . . will get you a map of Queens, NY
  
 ## Assumptions (a running list)
  - __Meta-assumption: ancestry can be inferred by race.__ This is a dramatic oversimplification, to say the least.

@@ -19,7 +19,7 @@ CREATE TABLE community_polys AS (
               250
             )
           ),
-          -400
+          -325
         ),
         4326
       ) AS the_geom
@@ -44,4 +44,5 @@ CREATE TABLE community_polys AS (
   LEFT JOIN community_tracts c 
   ON ST_Intersects(e.the_geom,ST_Centroid(c.the_geom))
   GROUP BY e.largest_community_name,e.the_geom
+  ORDER BY ST_Area(e.the_geom) ASC
 );
