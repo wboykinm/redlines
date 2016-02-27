@@ -19,7 +19,7 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  3. Get geodata
  4. Join tract geometries, `community`, ancestry and race tables on geoid
  5. Delete empty tracts
- 6. Expand block boundaries by 250m, dissolve, then erode by 325m for cartographic effect
+ 6. Expand block boundaries by 50m, dissolve, then erode by 150m and simplify a bit for cartographic effect
  7. Map [according to original style](cartography/chicago_demographics.mss)
  
 ## Usage

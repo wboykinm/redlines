@@ -16,10 +16,10 @@ CREATE TABLE community_polys AS (
                 the_geom,
                 3857
               ),
-              250
+              50
             )
           ),
-          -325
+          -150
         ),
         4326
       ) AS the_geom
@@ -36,7 +36,7 @@ CREATE TABLE community_polys AS (
   
   SELECT
     e.largest_community_name,
-    e.the_geom,
+    ST_Simplify(e.the_geom,0.0005) AS the_geom,
     avg(c.largest_group_proportion) AS largest_group_proportion,
     sum(c.largest_group_count) AS largest_group_count,
     sum(c.p0010001) AS total_population
