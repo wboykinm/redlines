@@ -64,10 +64,28 @@ psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
 ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
 psql communities -f form.sql
 
-echo '------------exporting final geojson and legend summary file------------'
+echo '------------importing geodata (OSM roads)------------'
+cd ../roads
+npm install
+# get the desired area from OSM:
+COMMUNITY_BBOX=$(psql communities -t -c "SELECT '(' || ST_YMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_XMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_YMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_XMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ')' FROM community_tracts ;")
+node index.js $COMMUNITY_BBOX $STATE_FIPS $COUNTY_FIPS ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/overpass_$county_FIPS.geojson
+ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/overpass_$county_FIPS.geojson -nln overpass_roads -lco PRECISION=NO
+
+echo '------------generating an exterior ring of roads------------'
+psql communities -f roads.sql
+
+echo '------------exporting final geojson(s) and legend summary file------------'
 rm -f ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson
+rm -f ../../data/communities_points_$STATE_FIPS"_"$COUNTY_FIPS.geojson
+rm -f ../../data/communities_mask_$STATE_FIPS"_"$COUNTY_FIPS.geojson
+rm -f ../../data/communities_roads_$STATE_FIPS"_"$COUNTY_FIPS.geojson
+
 rm -f ../../data/community_legend_$STATE_FIPS"_"$COUNTY_FIPS.csv
 ogr2ogr -f "GeoJSON" ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys"
+ogr2ogr -f "GeoJSON" ../../data/communities_points_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids"
+ogr2ogr -f "GeoJSON" ../../data/communities_mask_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
+ogr2ogr -f "GeoJSON" ../../data/communities_roads_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from ring_roads"
 psql communities -c "\\copy (SELECT largest_community_name,sum(largest_group_count) AS membership, avg(largest_group_proportion) AS avg_plurality FROM community_polys GROUP BY largest_community_name ORDER BY largest_community_name ASC) TO STDOUT DELIMITER ',' CSV HEADER" > ../../data/community_legend_$STATE_FIPS"_"$COUNTY_FIPS.csv
 rm -rf ../../data/tmp/
 
