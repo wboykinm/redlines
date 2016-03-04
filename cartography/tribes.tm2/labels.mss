@@ -9,7 +9,7 @@
   text-avoid-edges: true;
   text-min-padding:50px;
   text-fill: #333;
-  text-size: 12;
+  text-size: 14;
   //text-comp-op: grain-merge;
 }
 
@@ -22,7 +22,7 @@
   //text-avoid-edges: true;
   text-margin: 10px;
   text-fill: #333;
-  text-size: 14;
+  text-size: 16;
   //text-comp-op: grain-merge;
 }
 
@@ -37,10 +37,10 @@
   text-halo-fill:#777;
   text-halo-radius:1.4px;
   text-halo-rasterizer:fast;
-  text-size: 18;
+  text-size: 24;
   text-avoid-edges: true;
-  text-repeat-distance: 50px;
-  text-margin:10px;
+  text-repeat-distance: 200px;
+  text-margin:30px;
   text-comp-op:grain-extract;
 }
 

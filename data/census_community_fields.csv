@@ -1,99 +1,1 @@
-code,name,collection
-P0010001,Total,sf1
-P0030002,White,sf1
-P0030003,African American,sf1
-P0030004,American Indian,sf1
-P0030005,Asian,sf1
-P0030006,Hawaiian/Pacific Islander,sf1
-P0030007,Other race,sf1
-P0030008,More than one race,sf1
-P0040003,Hispanic/Latino,sf1
-PCT0050002,Indian,sf1
-PCT0050003,Bangladeshi,sf1
-PCT0050004,Bhutanese,sf1
-PCT0050005,Burmese,sf1
-PCT0050006,Cambodian,sf1
-PCT0050007,Chinese,sf1
-PCT0050008,Filipino,sf1
-PCT0050009,Hmong,sf1
-PCT0050010,Indonesian,sf1
-PCT0050011,Japanese,sf1
-PCT0050012,Korean,sf1
-PCT0050013,Laotian,sf1
-PCT0050014,Malaysian,sf1
-PCT0050015,Nepalese,sf1
-PCT0050016,Pakistani,sf1
-PCT0050017,Sri Lankan,sf1
-PCT0050018,Taiwanese,sf1
-PCT0050019,Thai,sf1
-PCT0050020,Vietnamese,sf1
-PCT0110004,Mexican,sf1
-PCT0110005,Puerto Rican,sf1
-PCT0110006,Cuban,sf1
-PCT0110007,Dominican,sf1
-PCT0110009,Costa Rican,sf1
-PCT0110010,Guatemalan,sf1
-PCT0110011,Honduran,sf1
-PCT0110012,Nicaraguan,sf1
-PCT0110013,Panamanian,sf1
-PCT0110014,Salvadoran,sf1
-PCT0110017,Argentinean,sf1
-PCT0110018,Bolivian,sf1
-PCT0110019,Chilean,sf1
-PCT0110020,Colombian,sf1
-PCT0110021,Ecuadorian,sf1
-PCT0110022,Paraguayan,sf1
-PCT0110023,Peruvian,sf1
-PCT0110024,Uruguayan,sf1
-PCT0110025,Venezuelan,sf1
-PCT0110029,Spanish,sf1
-B04006_002E,Afghan,acs5
-B04006_003E,Albanian,acs5
-B04006_007E,Egyptian,acs5
-B04006_008E,Iraqi,acs5
-B04006_010E,Lebanese,acs5
-B04006_011E,Moroccan,acs5
-B04006_012E,Palestinian,acs5
-B04006_013E,Syrian,acs5
-B04006_016E,Armenian,acs5
-B04006_019E,Austrian,acs5
-B04006_022E,Brazilian,acs5
-B04006_025E,Cajun,acs5
-B04006_029E,Croatian,acs5
-B04006_031E,Czech,acs5
-B04006_033E,Danish,acs5
-B04006_034E,Dutch,acs5
-B04006_036E,English,acs5
-B04006_039E,Finnish,acs5
-B04006_040E,French,acs5
-B04006_041E,French Canadian,acs5
-B04006_042E,German,acs5
-B04006_044E,Greek,acs5
-B04006_045E,Guyanese,acs5
-B04006_046E,Hungarian,acs5
-B04006_048E,Iranian,acs5
-B04006_049E,Irish,acs5
-B04006_050E,Israeli,acs5
-B04006_051E,Italian,acs5
-B04006_053E,Lithuanian,acs5
-B04006_059E,Norwegian,acs5
-B04006_060E,Pennsylvania German,acs5
-B04006_061E,Polish,acs5
-B04006_062E,Portuguese,acs5
-B04006_063E,Romanian,acs5
-B04006_064E,Russian,acs5
-B04006_067E,Scottish,acs5
-B04006_070E,Slovak,acs5
-B04006_074E,Cape Verdean,acs5
-B04006_075E,Ethiopian,acs5
-B04006_076E,Ghanaian,acs5
-B04006_079E,Nigerian,acs5
-B04006_082E,Somali,acs5
-B04006_084E,Sudanese,acs5
-B04006_089E,Swedish,acs5
-B04006_090E,Swiss,acs5
-B04006_091E,Turkish,acs5
-B04006_092E,Ukrainian,acs5
-B04006_093E,Welsh,acs5
-B04006_101E,Haitian,acs5
-B04006_102E,Jamaican,acs5
+id,code,name,collection,map_color1,P0010001,Total,sf1,#ffffff2,P0030002,White,sf1,#3333333,P0030003,African American,sf1,#5A89A14,P0030004,American Indian,sf1,#8b9cb35,P0030005,Asian,sf1,#9297a76,P0030006,Hawaiian/Pacific Islander,sf1,#9990997,P0030007,Other race,sf1,#9e8b8c8,P0030008,More than one race,sf1,#a3857f9,P0040003,Hispanic/Latino,sf1,#a67f7210,PCT0050002,Indian,sf1,#352B6C11,PCT0050003,Bangladeshi,sf1,#a9796512,PCT0050004,Bhutanese,sf1,#ab745a13,PCT0050005,Burmese,sf1,#ad6d4d14,PCT0050006,Cambodian,sf1,#ae674115,PCT0050007,Chinese,sf1,#57475216,PCT0050008,Filipino,sf1,#B9A45017,PCT0050009,Hmong,sf1,#ad623718,PCT0050010,Indonesian,sf1,#a4613f19,PCT0050011,Japanese,sf1,#9a604720,PCT0050012,Korean,sf1,#E0C08721,PCT0050013,Laotian,sf1,#8f5e4f22,PCT0050014,Malaysian,sf1,#865d5523,PCT0050015,Nepalese,sf1,#7b5c5d24,PCT0050016,Pakistani,sf1,#6e5b6425,PCT0050017,Sri Lankan,sf1,#5f5a6c26,PCT0050018,Taiwanese,sf1,#52587127,PCT0050019,Thai,sf1,#3e577928,PCT0050020,Vietnamese,sf1,#5a89a129,PCT0110004,Mexican,sf1,#B8782430,PCT0110005,Puerto Rican,sf1,#363A3D31,PCT0110006,Cuban,sf1,#567b9932,PCT0110007,Dominican,sf1,#536f9133,PCT0110009,Costa Rican,sf1,#51648a34,PCT0110010,Guatemalan,sf1,#505c8335,PCT0110011,Honduran,sf1,#50567d36,PCT0110012,Nicaraguan,sf1,#51527737,PCT0110013,Panamanian,sf1,#534f7238,PCT0110014,Salvadoran,sf1,#564e6d39,PCT0110017,Argentinean,sf1,#5a4e6940,PCT0110018,Bolivian,sf1,#5f506541,PCT0110019,Chilean,sf1,#64546142,PCT0110020,Colombian,sf1,#6b595e43,PCT0110021,Ecuadorian,sf1,#735f5c44,PCT0110022,Paraguayan,sf1,#7c675a45,PCT0110023,Peruvian,sf1,#86705846,PCT0110024,Uruguayan,sf1,#917b5647,PCT0110025,Venezuelan,sf1,#9d875448,PCT0110029,Spanish,sf1,#aa955249,B04006_002E,Afghan,acs5,#b9a45050,B04006_003E,Albanian,acs5,#e0c08751,B04006_007E,Egyptian,acs5,#dbb47852,B04006_008E,Iraqi,acs5,#d5a96853,B04006_010E,Lebanese,acs5,#cf9d5954,B04006_011E,Moroccan,acs5,#c8924a55,B04006_012E,Palestinian,acs5,#c1873a56,B04006_013E,Syrian,acs5,#ba7c2a57,B04006_016E,Armenian,acs5,#aa712958,B04006_019E,Austrian,acs5,#96672f59,B04006_022E,Brazilian,acs5,#825d3360,B04006_025E,Cajun,acs5,#6e533761,B04006_029E,Croatian,acs5,#5a4a3a62,B04006_031E,Czech,acs5,#45403c63,B04006_033E,Danish,acs5,#3f3f3e64,B04006_034E,Dutch,acs5,#584d3f65,B04006_036E,English,acs5,#725d3f66,B04006_039E,Finnish,acs5,#8b6c3f67,B04006_040E,French,acs5,#a47d3e68,B04006_041E,French Canadian,acs5,#be8d3c69,B04006_042E,German,acs5,#D99E3970,B04006_044E,Greek,acs5,#1F1C2D71,B04006_045E,Guyanese,acs5,#d99e3972,B04006_046E,Hungarian,acs5,#1f1c2d73,B04006_048E,Iranian,acs5,#23233274,B04006_049E,Irish,acs5,#405A5675,B04006_050E,Israeli,acs5,#272a3776,B04006_051E,Italian,acs5,#69693577,B04006_053E,Lithuanian,acs5,#2b323c78,B04006_059E,Norwegian,acs5,#30394179,B04006_060E,Pennsylvania German,acs5,#33414580,B04006_061E,Polish,acs5,#AB4C3C81,B04006_062E,Portuguese,acs5,#37494b82,B04006_063E,Romanian,acs5,#8B9CB383,B04006_064E,Russian,acs5,#AF623584,B04006_067E,Scottish,acs5,#3b515085,B04006_070E,Slovak,acs5,#3f595586,B04006_074E,Cape Verdean,acs5,#4f5e4c87,B04006_075E,Ethiopian,acs5,#60653e88,B04006_076E,Ghanaian,acs5,#ab4c3c89,B04006_079E,Nigerian,acs5,#7d6a5390,B04006_082E,Somali,acs5,#806c5391,B04006_084E,Sudanese,acs5,#846f5392,B04006_089E,Swedish,acs5,#87735393,B04006_090E,Swiss,acs5,#8b775394,B04006_091E,Turkish,acs5,#8e795395,B04006_092E,Ukrainian,acs5,#3E577996,B04006_093E,Welsh,acs5,#927d5397,B04006_101E,Haitian,acs5,#95815398,B04006_102E,Jamaican,acs5,#695653

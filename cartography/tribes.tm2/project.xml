@@ -18,7 +18,7 @@
 <Style name="landuse" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="landuse"
@@ -28,7 +28,7 @@
 <Style name="waterway" filter-mode="first">
   <Rule>
     <Filter>([class] = 'river') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="3" stroke="#7e93ae" smooth="1.8" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -37,7 +37,7 @@
   </Rule>
   <Rule>
     <Filter>([class] = 'canal') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.5" stroke="#7e93ae" smooth="1.8" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -46,7 +46,7 @@
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#7e93ae" stroke-width="1" smooth="1.8" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -60,7 +60,7 @@
 <Style name="water" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="water"
@@ -71,27 +71,27 @@
   <Rule>
     <MaxScaleDenominator>12500</MaxScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'runway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22_4.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000</MaxScaleDenominator>
     <MinScaleDenominator>12500</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'runway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22_2.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>200000</MaxScaleDenominator>
     <MinScaleDenominator>25000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'runway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22.png" />
   </Rule>
   <Rule>
     <MinScaleDenominator>200000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'runway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <MaxScaleDenominator>12500</MaxScaleDenominator>
@@ -113,47 +113,47 @@
   <Rule>
     <MaxScaleDenominator>5000</MaxScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22_4.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>12500</MaxScaleDenominator>
     <MinScaleDenominator>5000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22_2.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000</MaxScaleDenominator>
     <MinScaleDenominator>12500</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_shade_22_1.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>100000</MaxScaleDenominator>
     <MinScaleDenominator>50000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_solid_7.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>200000</MaxScaleDenominator>
     <MinScaleDenominator>100000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LinePatternSymbolizer file="img/line_solid_6.png" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>50000</MaxScaleDenominator>
     <MinScaleDenominator>25000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <MinScaleDenominator>200000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <MaxScaleDenominator>5000</MaxScaleDenominator>
@@ -187,16 +187,16 @@
   <Rule>
     <MaxScaleDenominator>200000</MaxScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <MinScaleDenominator>200000</MinScaleDenominator>
     <Filter>([mapnik::geometry_type] = 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="aeroway"
@@ -206,7 +206,7 @@
 <Style name="barrier_line" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="barrier_line"
@@ -216,7 +216,7 @@
 <Style name="building" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="building"
@@ -226,7 +226,7 @@
 <Style name="landuse_overlay" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="landuse_overlay"
@@ -400,7 +400,7 @@
 <Style name="tunnel" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="tunnel"
@@ -681,7 +681,7 @@
 <Style name="road" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="road"
@@ -945,7 +945,7 @@
 <Style name="bridge" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="bridge"
@@ -993,20 +993,20 @@
   <Rule>
     <MaxScaleDenominator>750000</MaxScaleDenominator>
     <Filter>([admin_level] &gt;= 3) and ([maritime] = 0) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="2.2" stroke="#666666" stroke-opacity="0.5" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>6500000</MaxScaleDenominator>
     <MinScaleDenominator>750000</MinScaleDenominator>
     <Filter>([admin_level] &gt;= 3) and ([maritime] = 0) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.5" stroke="#666666" stroke-opacity="0.5" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>6500000</MinScaleDenominator>
     <Filter>([admin_level] &gt;= 3) and ([maritime] = 0) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1" stroke="#666666" stroke-opacity="0.5" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -1028,20 +1028,20 @@
   <Rule>
     <MaxScaleDenominator>6500000</MaxScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="2.2" stroke-dasharray="9, 7" stroke-opacity="0.5" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000000</MaxScaleDenominator>
     <MinScaleDenominator>6500000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.8" stroke-dasharray="9, 7" stroke-opacity="0.5" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>25000000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-dasharray="9, 7" stroke-opacity="0.5" stroke-width="1.2" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -1063,20 +1063,20 @@
   <Rule>
     <MaxScaleDenominator>6500000</MaxScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="2.2" stroke-dasharray="9, 7" stroke="#666666" stroke-opacity="0.8" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000000</MaxScaleDenominator>
     <MinScaleDenominator>6500000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.8" stroke-dasharray="9, 7" stroke="#666666" stroke-opacity="0.8" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>25000000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([disputed] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-dasharray="9, 7" stroke-width="1.2" stroke="#666666" stroke-opacity="0.8" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -1098,20 +1098,20 @@
   <Rule>
     <MaxScaleDenominator>6500000</MaxScaleDenominator>
     <Filter>([admin_level] = 2) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="2.2" stroke-dasharray="4, 4, 3, 3" stroke-opacity="0.5" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000000</MaxScaleDenominator>
     <MinScaleDenominator>6500000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.8" stroke-dasharray="4, 4, 3, 3" stroke-opacity="0.5" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>25000000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([maritime] = 1) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-dasharray="4, 4, 3, 3" stroke-opacity="0.5" stroke-width="1.2" stroke="#666666" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -1133,20 +1133,20 @@
   <Rule>
     <MaxScaleDenominator>6500000</MaxScaleDenominator>
     <Filter>([admin_level] = 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="2.2" stroke="#666666" stroke-opacity="0.8" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>25000000</MaxScaleDenominator>
     <MinScaleDenominator>6500000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.8" stroke="#666666" stroke-opacity="0.8" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>25000000</MinScaleDenominator>
     <Filter>([admin_level] = 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke-width="1.2" stroke="#666666" stroke-opacity="0.8" stroke-dasharray="2, 1, 3, 1, 1, 1, 4, 1, 5, 1" stroke-linejoin="round" stroke-linecap="round" />
   </Rule>
   <Rule>
@@ -1167,7 +1167,7 @@
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="admin"
@@ -1178,7 +1178,7 @@
 <Style name="communities_17_031" filter-mode="first" image-filters="agg-stack-blur(3,3)">
   <Rule>
     <Filter>([largest_community_name] = 'Ukrainian') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#3e5779" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1189,7 +1189,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Russian') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#af6235" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1200,7 +1200,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Romanian') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#8b9cb3" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1211,7 +1211,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Puerto Rican') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#363a3d" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1222,7 +1222,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Polish') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#ab4c3c" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1233,7 +1233,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Mexican') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#b87824" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1244,7 +1244,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Korean') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#e0c087" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1255,7 +1255,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Italian') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#696935" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1266,7 +1266,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Irish') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#405a56" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1277,7 +1277,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Indian') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#352b6c" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1288,7 +1288,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Greek') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#1f1c2d" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1299,7 +1299,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'German') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#d99e39" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1310,7 +1310,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Filipino') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#b9a450" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1321,7 +1321,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'Chinese') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#574752" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1332,7 +1332,7 @@
   </Rule>
   <Rule>
     <Filter>([largest_community_name] = 'African American') and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer fill="#5a89a1" smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1343,7 +1343,7 @@
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <LineSymbolizer stroke="#ffffff" stroke-width="0" stroke-opacity="1" />
     <PolygonSymbolizer smooth="0.4" fill-opacity="0.9" comp-op="overlay" />
   </Rule>
@@ -1359,7 +1359,7 @@
 <Style name="communities_roads_17_031" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="communities_roads_17_031"
@@ -1369,10 +1369,10 @@
 <Style name="communities_points_17_031" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="100" wrap-before="true" fill="#222222" halo-fill="#777777" halo-radius="1.4" halo-rasterizer="fast" size="18" avoid-edges="true" repeat-distance="50" margin="10" comp-op="grain-extract" minimum-padding="50" ><![CDATA[[largest_community_name]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="100" wrap-before="true" fill="#222222" halo-fill="#777777" halo-radius="1.4" halo-rasterizer="fast" size="24" avoid-edges="true" repeat-distance="200" margin="30" comp-op="grain-extract" minimum-padding="50" ><![CDATA[[largest_community_name]]]></TextSymbolizer>
   </Rule>
   <Rule>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="100" wrap-before="true" fill="#222222" halo-fill="#777777" halo-radius="1.4" halo-rasterizer="fast" size="18" avoid-edges="true" repeat-distance="50" margin="10" comp-op="grain-extract" ><![CDATA[[largest_community_name]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="100" wrap-before="true" fill="#222222" halo-fill="#777777" halo-radius="1.4" halo-rasterizer="fast" size="24" avoid-edges="true" repeat-distance="200" margin="30" comp-op="grain-extract" ><![CDATA[[largest_community_name]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="communities_points_17_031"
@@ -1382,7 +1382,7 @@
 <Style name="country_label_line" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="country_label_line"
@@ -1392,7 +1392,7 @@
 <Style name="country_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="country_label"
@@ -1402,7 +1402,7 @@
 <Style name="marine_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="marine_label"
@@ -1412,7 +1412,7 @@
 <Style name="state_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="state_label"
@@ -1422,11 +1422,11 @@
 <Style name="place_label" filter-mode="first">
   <Rule>
     <Filter>([scalerank] &lt; 3)</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="place_label"
@@ -1436,7 +1436,7 @@
 <Style name="water_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="water_label"
@@ -1446,15 +1446,15 @@
 <Style name="poi_label" filter-mode="first">
   <Rule>
     <Filter>([scalerank] &lt; 2) and ([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" margin="10" fill="#333333" size="14" avoid-edges="true" minimum-padding="50" ><![CDATA[[name]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" margin="10" fill="#333333" size="16" avoid-edges="true" minimum-padding="50" ><![CDATA[[name]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <Filter>([scalerank] &lt; 2)</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" margin="10" fill="#333333" size="14" ><![CDATA[[name]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" margin="10" fill="#333333" size="16" ><![CDATA[[name]]]></TextSymbolizer>
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="poi_label"
@@ -1472,7 +1472,7 @@
   </Rule>
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="road_label"
@@ -1482,7 +1482,7 @@
 <Style name="waterway_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="waterway_label"
@@ -1492,7 +1492,7 @@
 <Style name="housenum_label" filter-mode="first">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
   </Rule>
 </Style>
 <Layer name="housenum_label"
@@ -1502,7 +1502,7 @@
 <Style name="communities_mask_17_031" filter-mode="first" image-filters="agg-stack-blur(50,50)">
   <Rule>
     <Filter>([name_en] = 'downtown')</Filter>
-    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="12" ><![CDATA[[name_en]]]></TextSymbolizer>
+    <TextSymbolizer text-transform="uppercase" face-name="Linotte SemiBold" wrap-width="20" wrap-before="true" avoid-edges="true" minimum-padding="50" fill="#333333" size="14" ><![CDATA[[name_en]]]></TextSymbolizer>
     <PolygonPatternSymbolizer file="img/texture_3.png" />
   </Rule>
   <Rule>
