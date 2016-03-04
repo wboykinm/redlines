@@ -36,7 +36,7 @@ echo '------------joining literate group names------------'
 cd ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS
 mv community_attributes_ordered.csv.tmp community_attributes_ordered_max.csv
 csvjoin -c "largest_group,code" --left community_attributes_ordered_max.csv ../census_community_fields.csv > community_properties.csv
-csvcut -c "1-4,103-106" community_properties.csv > community_properties_light.csv
+csvcut -c "1-4,103-109" community_properties.csv > community_properties_light.csv
 sed -i tmp.bak 's/name/largest_community_name/g' community_properties_light.csv
 
 echo '------------importing geodata (tracts)------------'
@@ -86,7 +86,8 @@ ogr2ogr -f "GeoJSON" ../../data/communities_$STATE_FIPS"_"$COUNTY_FIPS.geojson P
 ogr2ogr -f "GeoJSON" ../../data/communities_points_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids"
 ogr2ogr -f "GeoJSON" ../../data/communities_mask_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 #ogr2ogr -f "GeoJSON" ../../data/communities_roads_$STATE_FIPS"_"$COUNTY_FIPS.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from ring_roads"
-psql communities -c "\\copy (SELECT largest_community_name,sum(largest_group_count) AS membership, avg(largest_group_proportion) AS avg_plurality FROM community_polys GROUP BY largest_community_name ORDER BY largest_community_name ASC) TO STDOUT DELIMITER ',' CSV HEADER" > ../../data/community_legend_$STATE_FIPS"_"$COUNTY_FIPS.csv
+psql communities -c "\\copy (SELECT p.largest_community_name, sum(p.largest_group_count) AS membership, avg(p.largest_group_proportion) AS avg_plurality, t.map_color FROM community_polys p LEFT JOIN community_tracts t ON t.largest_community_name = p.largest_community_name GROUP BY p.largest_community_name, t.map_color ORDER BY p.largest_community_name ASC) TO STDOUT DELIMITER ',' CSV HEADER" > ../../cartography/legend/community_legend.csv
+cp ../../cartography/legend/community_legend.csv ../../data/community_legend_$STATE_FIPS"_"$COUNTY_FIPS.csv 
 rm -rf ../../data/tmp/
 
 echo '------------done!------------'

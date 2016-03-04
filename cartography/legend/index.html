@@ -9,104 +9,89 @@
     <div id="chart"></div>
     <script src="http://d3js.org/d3.v2.min.js"></script>
     <script>
-function renderChart() {
+      function renderChart() {
+        d3.csv("community_legend.csv", function(returned) {
+          var data = returned;
+          var valueLabelWidth = 40; // space reserved for value labels (right)
+          var barHeight = 30; // height of one bar
+          var barLabelWidth = 150; // space reserved for bar labels
+          var barLabelPadding = 5; // padding between bar and bar labels (left)
+          var gridLabelHeight = 18; // space reserved for gridline labels
+          var gridChartOffset = 3; // space between start of grid and first bar
+          var maxBarWidth = 420; // width of the bar with the max value
+           
+          // accessor functions 
+          var barLabel = function(d) { return d['largest_community_name']; };
+          var barValue = function(d) { return parseFloat(d['avg_plurality']); };
+           
+          // sorting
+          var sortedData = data.sort(function(a, b) {
+           return d3.descending(barValue(a), barValue(b));
+          }); 
 
-var data = d3.csv.parse(d3.select('#csv').text());
-var valueLabelWidth = 40; // space reserved for value labels (right)
-var barHeight = 20; // height of one bar
-var barLabelWidth = 100; // space reserved for bar labels
-var barLabelPadding = 5; // padding between bar and bar labels (left)
-var gridLabelHeight = 18; // space reserved for gridline labels
-var gridChartOffset = 3; // space between start of grid and first bar
-var maxBarWidth = 420; // width of the bar with the max value
- 
-// accessor functions 
-var barLabel = function(d) { return d['largest_community_name']; };
-var barValue = function(d) { return parseFloat(d['avg_plurality']); };
- 
-// sorting
-var sortedData = data.sort(function(a, b) {
- return d3.descending(barValue(a), barValue(b));
-}); 
-
-// scales
-var yScale = d3.scale.ordinal().domain(d3.range(0, sortedData.length)).rangeBands([0, sortedData.length * barHeight]);
-var y = function(d, i) { return yScale(i); };
-var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
-var x = d3.scale.linear().domain([0, d3.max(sortedData, barValue)]).range([0, maxBarWidth]);
-// svg container element
-var chart = d3.select('#chart').append("svg")
-  .attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
-  .attr('height', gridLabelHeight + gridChartOffset + sortedData.length * barHeight);
-// grid line labels
-var gridContainer = chart.append('g')
-  .attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')'); 
-gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
-  .attr("x", x)
-  .attr("dy", -3)
-  .attr("text-anchor", "middle")
-  .text(String);
-// vertical grid lines
-gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
-  .attr("x1", x)
-  .attr("x2", x)
-  .attr("y1", 0)
-  .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
-  .style("stroke", "#ccc");
-// bar labels
-var labelsContainer = chart.append('g')
-  .attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
-labelsContainer.selectAll('text').data(sortedData).enter().append('text')
-  .attr('y', yText)
-  .attr('stroke', 'none')
-  .attr('fill', 'black')
-  .attr("dy", ".35em") // vertical-align: middle
-  .attr('text-anchor', 'end')
-  .text(barLabel);
-// bars
-var barsContainer = chart.append('g')
-  .attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
-barsContainer.selectAll("rect").data(sortedData).enter().append("rect")
-  .attr('y', y)
-  .attr('height', yScale.rangeBand())
-  .attr('width', function(d) { return x(barValue(d)); })
-  .attr('stroke', 'white')
-  .attr('fill', 'steelblue');
-// bar value labels
-barsContainer.selectAll("text").data(sortedData).enter().append("text")
-  .attr("x", function(d) { return x(barValue(d)); })
-  .attr("y", yText)
-  .attr("dx", 3) // padding-left
-  .attr("dy", ".35em") // vertical-align: middle
-  .attr("text-anchor", "start") // text-align: right
-  .attr("fill", "black")
-  .attr("stroke", "none")
-  .text(function(d) { return d3.round(barValue(d), 2); });
-// start line
-barsContainer.append("line")
-  .attr("y1", -gridChartOffset)
-  .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
-  .style("stroke", "#000");
-
-}
+          // scales
+          var yScale = d3.scale.ordinal().domain(d3.range(0, sortedData.length)).rangeBands([0, sortedData.length * barHeight]);
+          var y = function(d, i) { return yScale(i); };
+          var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
+          var x = d3.scale.linear().domain([0, d3.max(sortedData, barValue)]).range([0, maxBarWidth]);
+          // svg container element
+          var chart = d3.select('#chart').append("svg")
+            .attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
+            .attr('height', gridLabelHeight + gridChartOffset + sortedData.length * barHeight);
+          // grid line labels
+          var gridContainer = chart.append('g')
+            .attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')'); 
+          gridContainer.selectAll("text").data(x.ticks(5)).enter().append("text")
+            .attr("x", x)
+            .attr("dy", -3)
+            .attr("text-anchor", "middle")
+            .text(String);
+          // vertical grid lines
+          gridContainer.selectAll("line").data(x.ticks(5)).enter().append("line")
+            .attr("x1", x)
+            .attr("x2", x)
+            .attr("y1", 0)
+            .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+            .style("stroke", "#ccc");
+          // bar labels
+          var labelsContainer = chart.append('g')
+            .attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+          labelsContainer.selectAll('text').data(sortedData).enter().append('text')
+            .attr('y', yText)
+            .attr('stroke', 'none')
+            .attr('fill', 'black')
+            .attr("dy", ".35em") // vertical-align: middle
+            .attr('text-anchor', 'end')
+            .text(barLabel);
+          // bars
+          var barsContainer = chart.append('g')
+            .attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+          barsContainer.selectAll("rect").data(sortedData).enter().append("rect")
+            .attr('y', y)
+            .attr('height', yScale.rangeBand())
+            .attr('width', function(d) { return x(barValue(d)); })
+            .attr('stroke', 'white')
+            .attr('fill-opacity', 0.9)
+            .attr('fill', function(d) { return d.map_color });
+          // bar value labels
+          /*barsContainer.selectAll("text").data(sortedData).enter().append("text")
+            .attr("x", function(d) { return x(barValue(d)); })
+            .attr("y", yText)
+            .attr("dx", 3) // padding-left
+            .attr("dy", ".35em") // vertical-align: middle
+            .attr("text-anchor", "start") // text-align: right
+            .attr("fill", "black")
+            .attr("stroke", "none")
+            .text(function(d) { return (d3.round(barValue(d), 2) * 100) + '%'; });*/
+          // start line
+          barsContainer.append("line")
+            .attr("y1", -gridChartOffset)
+            .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+            .style("stroke", "#000");
+        });
+      }
+    
+      renderChart();
     </script>
-    <script id="csv" type="text/csv">largest_community_name,membership,avg_plurality
-African American,1120135,0.491624619623353
-Chinese,16733,0.434557852804495
-Filipino,1019,0.0850004704763478
-German,216802,0.218633805393376
-Greek,823,0.11362604620004
-Indian,11285,0.180954071324766
-Irish,152487,0.254300615962565
-Italian,6808,0.245686966369006
-Korean,2013,0.149280481776934
-Mexican,700076,0.394559041403888
-Polish,139568,0.231790485973899
-Puerto Rican,7002,0.275729742878759
-Romanian,266,0.101371951219512
-Russian,6028,0.154365165631526
-Ukrainian,596,0.173356602675974
-</script>
-    <script>renderChart();</script>
   </body>
 </html> 
