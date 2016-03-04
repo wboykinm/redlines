@@ -23,9 +23,6 @@ var getMax = function(row, callback) {
   var maxKey = Object.keys(row).reduce(function(key,max){
     return (parseInt(row[key]) > parseInt(row[max])) ? key : max;
   });
-  /*var maxKey = Object.keys(row).reduce(function(a, b){ 
-    return row[a] > row[b] ? a : b 
-  });*/
   
   // Append to the row:
   rowNew['largest_group'] = maxKey;
