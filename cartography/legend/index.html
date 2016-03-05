@@ -2,8 +2,22 @@
 <!-- Generated with d3-generator.com -->
 <html>
   <head>
-     <title>Bar Chart</title>
-     <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <title>Bar Chart</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <style>
+      body {
+        background-image: url('texture.png');
+      }
+      @font-face {
+        font-family: 'MAW';
+        src: url('MAW.ttf');
+      }
+      text {
+        font: 20px "MAW";
+        pointer-events: none;
+        text-transform: uppercase;
+      }
+    </style>
   </head>
   <body>
     <div id="chart"></div>
@@ -13,12 +27,14 @@
         d3.csv("community_legend.csv", function(returned) {
           var data = returned;
           var valueLabelWidth = 40; // space reserved for value labels (right)
-          var barHeight = 30; // height of one bar
-          var barLabelWidth = 150; // space reserved for bar labels
+          var barHeight = 40; // height of one bar
+          var barLabelWidth = 180; // space reserved for bar labels
           var barLabelPadding = 5; // padding between bar and bar labels (left)
           var gridLabelHeight = 18; // space reserved for gridline labels
           var gridChartOffset = 3; // space between start of grid and first bar
-          var maxBarWidth = 420; // width of the bar with the max value
+          var maxBarWidth = 520; // width of the bar with the max value
+          var borderRadiusX = 18; 
+          var borderRadiusY = (18);
            
           // accessor functions 
           var barLabel = function(d) { return d['largest_community_name']; };
@@ -70,9 +86,11 @@
             .attr('y', y)
             .attr('height', yScale.rangeBand())
             .attr('width', function(d) { return x(barValue(d)); })
-            .attr('stroke', 'white')
+            .attr('stroke', '#EDEADF')
+            .attr('stroke-width',5)
             .attr('fill-opacity', 0.9)
-            .attr('fill', function(d) { return d.map_color });
+            .attr('fill', function(d) { return d.map_color })
+            .attr({ry : borderRadiusX, rx : borderRadiusY });
           // bar value labels
           /*barsContainer.selectAll("text").data(sortedData).enter().append("text")
             .attr("x", function(d) { return x(barValue(d)); })
