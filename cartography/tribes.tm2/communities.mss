@@ -1,4 +1,4 @@
-#communities_06_037 {
+#communities {
   line-color: #FFF;
   line-width: 0;
   line-opacity: 1;
@@ -33,7 +33,7 @@
   [largest_community_name='Sri Lankan']{ polygon-fill: #5f5a6c; }
   [largest_community_name='Taiwanese']{ polygon-fill: #525871; }
   [largest_community_name='Thai']{ polygon-fill: #3e5779; }
-  [largest_community_name='Vietnamese']{ polygon-fill: #5a89a1; }
+  [largest_community_name='Vietnamese']{ polygon-fill: #365F74; }
   [largest_community_name='Mexican']{ polygon-fill: #B87824; }
   [largest_community_name='Puerto Rican']{ polygon-fill: #363A3D; }
   [largest_community_name='Cuban']{ polygon-fill: #567b99; }
@@ -106,7 +106,7 @@
   [largest_community_name='Jamaican']{ polygon-fill: #695653; }
 }
 
-#communities_points_06_037 {
+#communities_points {
   ::labels {
     //marker-width:20px;
     text-name: "[largest_community_name]";
@@ -126,7 +126,7 @@
   }
 }
 
-#communities_mask_06_037 {
+#communities_mask {
   polygon-pattern-file: url(img/texture_3.png);
   image-filters:agg-stack-blur(50,50);
 }

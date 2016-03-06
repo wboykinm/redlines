@@ -74,8 +74,8 @@ rm -f ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson
 rm -f ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
 
 # EXPORT THE 3 MAP-READY FILES TO THE TMP DATA DIRECTORY
-ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys"
-ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids"
+ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
+ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 # DEFINE DATA LAYER NAMES
 POLYS=$MB_USER.communities_$STATE_FIPS"_"$COUNTY_FIPS
