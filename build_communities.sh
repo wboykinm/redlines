@@ -91,10 +91,10 @@ export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
 # mapbox upload --name $MASK tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
 
 echo "------------creating mapbox studio project for $STATE_NAME county $COUNTY_FIPS------------"
-cd ../../cartography
+cd ../cartography
 # CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
-rf -rf tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
-cp tribes.tm2 tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
+rm -rf tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
+cp -r tribes.tm2 tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
 cd tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2/
 # GET CENTROID OF COUNTY
 COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
@@ -122,7 +122,7 @@ phantomjs rasterize.js http://localhost:8000/index.html legend.png
 # KILL THE WEBSERVER
 kill -s 9 $STATICPID
 cp legend.png ../img/
-cp legend.png ../img/exports/
+cp legend.png ../exports/
 cd ../../../
 
 # CLEAR OUT THE TEMP DATA TO SAVE SPACE
