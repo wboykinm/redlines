@@ -115,8 +115,8 @@ cd legend/
 # START A WEB SERVER
 static -p 8000 "$output""$ext" &
 STATICPID=$!
-sleep 30
-echo 'waiting 30s for server to spin up'
+sleep 10
+echo 'waiting 10s for server to spin up'
 # EXPORT THE IMAGE
 phantomjs rasterize.js http://localhost:8000/index.html legend.png
 # KILL THE WEBSERVER
