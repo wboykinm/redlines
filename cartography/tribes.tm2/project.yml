@@ -26,7 +26,7 @@ layers:
   - road
   - bridge
   - admin
-  - communities
+  - communities_polys
   - communities_points
   - country_label_line
   - country_label
