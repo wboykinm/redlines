@@ -108,7 +108,7 @@ sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
 sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
 
 # EXPORT LEGEND WITH EMPTY GROUPS REMOVED
-psql communities -c "\\copy (SELECT p.largest_community_name, sum(p.largest_group_count) AS membership, avg(p.largest_group_proportion) AS avg_plurality, t.map_color FROM community_polys p LEFT JOIN community_tracts t ON t.largest_community_name = p.largest_community_name GROUP BY p.largest_community_name, t.map_color ORDER BY p.largest_community_name ASC) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
+psql communities -c "\\copy (WITH groups AS ( SELECT p.largest_community_name, sum(p.largest_group_count) AS membership, avg(p.largest_group_proportion) AS avg_plurality, t.map_color FROM community_polys p LEFT JOIN community_tracts t ON t.largest_community_name = p.largest_community_name GROUP BY p.largest_community_name, t.map_color ORDER BY p.largest_community_name ASC ) SELECT * FROM groups WHERE membership > 0) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
 
 # EXPORT LEGEND TO PNG FOR LAYOUT
 cd legend/
