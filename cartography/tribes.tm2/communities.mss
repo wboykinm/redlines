@@ -1,4 +1,4 @@
-#communities {
+#communities_polys {
   line-color: #FFF;
   line-width: 0;
   line-opacity: 1;

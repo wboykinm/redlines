@@ -9,8 +9,8 @@ STATE_ABBRV=$2
 STATE_FIPS=$3
 COUNTY_FIPS=$4
 CENSUS_KEY=$5
-TRIBES_MB_TOKEN='sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsZ3luZzRqMmMzeHVoa3A2cHh6b2cxayJ9.Z9Pvyg0xJ-6Mg9mfzOx5JA
-'
+TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
+
 MB_USER=landplanner
 
 echo '------------cleaning house------------'
@@ -85,10 +85,9 @@ MASK=$MB_USER.communities_mask_$STATE_FIPS"_"$COUNTY_FIPS
 echo '------------uploading geojson to mapbox data'
 cd ../../data/
 export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
-# TODO not currently uploading: https://github.com/mapbox/mapbox-cli-py/issues/67
-# mapbox upload --name $POLYS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson
-# mapbox upload --name $POINTS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson
-# mapbox upload --name $MASK tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
+mapbox upload --name communities_polys $POLYS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson
+mapbox upload --name communities_points $POINTS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson
+mapbox upload --name communities_mask $MASK tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
 
 echo "------------creating mapbox studio project for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../cartography
