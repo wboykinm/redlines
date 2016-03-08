@@ -104,10 +104,27 @@
   [largest_community_name='Welsh']{ polygon-fill: #927d53; }
   [largest_community_name='Haitian']{ polygon-fill: #958153; }
   [largest_community_name='Jamaican']{ polygon-fill: #695653; }
+  ::labels [zoom>=12]{
+    //marker-width:20px;
+    text-name: "[largest_community_name]";
+    text-transform: uppercase;
+    text-face-name: @normal;
+    text-wrap-width: 100;
+    text-wrap-before: true;
+    text-fill: #222;
+    text-halo-fill:#777;
+    text-halo-radius:1.8px;
+    text-halo-rasterizer:fast;
+    text-size: 24;
+    text-avoid-edges: true;
+    text-repeat-distance: 200px;
+    text-margin:30px;
+    text-comp-op:grain-extract;
+  }
 }
 
 #communities_points {
-  ::labels {
+  ::labels [zoom<12]{
     //marker-width:20px;
     text-name: "[largest_community_name]";
     text-transform: uppercase;
