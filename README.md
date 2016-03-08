@@ -18,7 +18,7 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
  - [OpenStreetmap reference data via Mapbox](http://www.openstreetmap.org/)    
 
 ## Processing steps
- 1. [Hit the Census API for tabular data](processing/pull/index.js)]
+ 1. [Hit the Census API for tabular data](processing/pull/index.js)
  2. Add `largest_group` aggregate field, populated with largest ancestry/racial/ethnic group in each census tract by proportion of the population; retain proportion stats
  3. Get geodata
  4. Join tract geometries, `community`, ancestry and race tables on geoid
@@ -58,5 +58,6 @@ bash build_communities.sh "New York" ny 36 081 <census_api_key>
  - Asian and Hispanic/Latino groups can be represented by race in the absence of ancestral categories encompassing them.
  - In majority-black census blocks, "American" ancestry refers almost exclusively to African-Americans.
  - The "Mixed" racial group in a block is adequately represented by the largest ancestral group in the containing tract.
- - "Hispanic/Latino" can be [represented as a race-like category](http://censusreporter.org/topics/race-hispanic/).
  - Margin of error can be ignored.
+ - To make it under the API limit (50 variables), the smallest-population groups (<100,000 nationally) may be ignored.
+ - Religion-based communities (e.g. Jewish, Mennonite) may be excluded; the Census does not collect information on religious practice.
