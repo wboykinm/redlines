@@ -1,19 +1,37 @@
-// PENCIL
-
-// Much of the design of this style is handled by image textures.
-// These were drawn by hand on paper, scanned, and tweaked in
-// image editing software.
-
 Map {
-  background-image:url(img/texture_3.png);
+  //background-image:url(img/texture_3.png);
   font-directory: url('fonts');
   buffer-size: 1024px;
 }
 
-#waterway, {
+#water {
+  ::light14[zoom<=14],
+  ::light15[zoom=15],
+  ::light16[zoom=16],
+  ::light17[zoom>=17] {
+    polygon-fill: #ddd9ce;
+    polygon-gamma: 0.3;
+    polygon-opacity:0.6;
+    image-filters: agg-stack-blur(8,8);
+    image-filters-inflate: true;
+  }
+  ::light15[zoom=15] { image-filters: agg-stack-blur(16,16); }
+  ::light16[zoom=16] { image-filters: agg-stack-blur(32,32); }
+  ::light17[zoom<=17] { image-filters: agg-stack-blur(64,64); }
+  // Pencil shading texture:
+  ::texture {
+    polygon-pattern-opacity:0.5;
+    comp-op: multiply;
+    polygon-pattern-alignment: global;
+    polygon-pattern-file:url(img/hatch.png);
+  }
+}
+
+#waterway [class!='river'] {
   line-color: #7E93AE;
   line-width:1px;
   line-smooth:1.8;
+  line-opacity:0.2;
   line-cap:round;
   [class='canal'] { line-width:1.5px; }
   [class='river'] { line-width:3px; }
@@ -34,49 +52,4 @@ Map {
     [zoom>=15] { line-pattern-file:url(img/line_shade_22_2.png); }
     [zoom>=16] { line-pattern-file:url(img/line_shade_22_4.png); }
   }
-}
-
-#admin[admin_level=2] {
-  ::glow[maritime=0] {
-    opacity: 0.8;
-    line-color: #e3e3e3;
-    line-width: 6;
-    line-join: round;
-    [zoom>=5] { line-width: 7; }
-    [zoom>=7] { line-width: 8; }
-  }
-  line-width:1.2;
-  line-color: #666;
-  line-opacity:0.8;
-  line-dasharray:2,1,3,1,1,1,4,1,5,1;
-  line-join: round;
-  line-cap: round;
-  [maritime=1] {
-    line-dasharray:4,4,3,3;
-    line-opacity: 0.5;
-  }
-  [disputed=1] {
-    line-dasharray: 9,7;
-  }
-  [zoom>=5] { line-width: 1.8; }
-  [zoom>=7] { line-width: 2.2; }
-}
-
-#admin[admin_level>=3][maritime=0] {
-  ::glow[maritime=0] {
-    opacity: 0.8;
-    line-color: #e3e3e3;
-    line-width: 4;
-    line-join: round;
-    [zoom>=5] { line-width: 5; }
-    [zoom>=7] { line-width: 6; }
-  }
-  line-width: 1;
-  line-color: #666;
-  line-opacity:0.5;
-  line-dasharray:2,1,3,1,1,1,4,1,5,1;
-  line-join: round;
-  line-cap: round;
-  [zoom>=7] { line-width: 1.5; }
-  [zoom>=10] { line-width: 2.2; }
 }

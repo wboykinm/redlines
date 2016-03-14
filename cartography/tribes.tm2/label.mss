@@ -1,67 +1,114 @@
-/*@name: '[name_en]';
+@normal: 'MAW Medium';
 
-#place_label[type='city'][localrank=1] {
-  text-face-name: 'Schulschrift A OT Normal';
-  text-name: @name;
-  text-opacity: 0.75;
-  text-size: 20;
-  text-halo-fill: fadeout(#eee,90);
-  text-halo-rasterizer: fast;
-  text-halo-radius: 4;
-  text-character-spacing: -4;
-  [scalerank>=0][scalerank<=1] { text-size: 30; }
-  [scalerank>=2][scalerank<=3] { text-size: 28; }
-  [scalerank>=4][scalerank<=5] { text-size: 26; }
-  [scalerank>=6][scalerank<=7] { text-size: 24; }
-  [scalerank>=8][scalerank<=9] { text-size: 22; }
+#place_label [scalerank<3],[name_en='downtown'] {
+  text-name: "[name_en]";
+  text-transform: uppercase;
+  text-face-name: @normal;
+  text-wrap-width: 20;
+  text-wrap-before: true;
+  text-avoid-edges: true;
+  text-min-padding:50px;
+  text-fill: #333;
+  text-size: 14;
+  //text-comp-op: grain-merge;
 }
 
-#place_label[type!='city'][localrank=1] {
-  text-face-name: 'Providence Sans Offc Pro Bold';
-  text-name: @name;
-  text-opacity: 0.75;
-  text-halo-fill: fadeout(#eee,90);
-  text-halo-rasterizer: fast;
-  text-halo-radius: 4;
-  text-character-spacing: -2;
-  [type='town'] { text-size: 20; }
-  [type='village'],[type='suburb'] { text-size: 18; }
-  [type='hamlet'],[type='neighbourhood'] { text-size: 16; }
+#poi_label[scalerank<2] {
+  text-name: "[name]";
+  text-transform: uppercase;
+  text-face-name: @normal;
+  text-wrap-width: 20;
+  text-wrap-before: true;
+  text-avoid-edges: true;
+  text-margin: 10px;
+  text-fill: #333;
+  text-size: 16;
+  //text-comp-op: grain-merge;
 }
 
-#poi_label[maki='park'] {
-  [zoom>=15][scalerank<=2] {
-    text-face-name: 'Providence Sans Offc Pro Regular';
-    text-name: @name;
-    text-opacity: 0.80;
-    text-size: 14;
-    text-halo-fill: fadeout(#eee,85);
-    text-halo-rasterizer: fast;
-    text-halo-radius: 4;
-    text-character-spacing: -3;
-    [scalerank=3] { text-size: 16; }
-    [scalerank=2] { text-size: 18; }
-    [scalerank=1] { text-size: 20; }
-    [zoom>=17] {
-      text-size: 16;
-      [scalerank=3] { text-size: 18; }
-      [scalerank=2] { text-size: 20; }
-      [scalerank=1] { text-size: 22; }
-    }
-  }
+
+#road_label [class='main'] {
+  text-name: "[name]";
+  text-transform: uppercase;
+  text-face-name: @normal;
+  text-placement: line;
+  text-fill: #555;
+  text-size: 10;
+  //text-allow-overlap: true;
+  text-avoid-edges: true;
+  text-margin:50px;
+  text-repeat-distance:500px;
+  text-min-padding:50px;
+  //text-comp-op:grain-merge;
 }
 
-#road_label {
-  [class='main'][zoom>=16] {
-    text-face-name: 'Providence Sans Offc Pro Regular';
-    text-name: @name;
-    text-opacity: 0.80;
-    text-size: 14;
-    text-halo-fill: fadeout(#eee,60);
-    text-halo-rasterizer: fast;
-    text-halo-radius: 2;
-    text-character-spacing: -2;
-    text-placement: line;
+// Water bodies //
+#water_label {
+  [zoom<=13],  // automatic area filtering @ low zooms
+  [zoom>=14][area>500000],
+  [zoom>=16][area>10000],
+  [zoom>=17] {
+    text-name: "[name]";
+    text-face-name: @normal;
+    text-fill: #555;
+    text-character-spacing: 0.5; 
+    text-size: 9;
     text-transform: uppercase;
+    text-wrap-width: 60;
+    text-wrap-before: true;
   }
-}*/
+  [zoom>=15][area>500000],
+  [zoom>=17][area>10000],
+  [zoom>=18]  {
+    text-size: 10;
+    text-wrap-width: 70;
+  }
+  [zoom>=16][area>500000],
+  [zoom>=18][area>10000],
+  [zoom>=19]  {
+    text-size: 11;
+    text-wrap-width: 80;
+  }
+  [zoom>=12][area>10000000],
+  [zoom>=14][area>5000000]  {
+    text-size: 12;
+    text-wrap-width: 90;
+  }
+  [zoom>=10][area>100000000]  {
+    text-size: 13;
+    text-wrap-width: 90;
+  }
+}
+
+// Waterways //
+#waterway_label {
+  [class="river"][zoom>=13],
+  [class="canal"][zoom>=15],
+  [class="stream"][zoom>=17], 
+  [class="stream_intermittent"][zoom>=17] {
+    text-placement: line;
+    text-avoid-edges:true;
+    text-transform: uppercase;
+    text-margin: 150px;
+    text-name: "[name]";
+    text-face-name: @normal;
+    text-fill: #555;
+    text-size: 10;
+    text-allow-overlap: false;
+    text-character-spacing: 0.5; 
+  } 
+  [class="river"][zoom>=14],
+  [class="canal"][zoom>=16],
+  [class="stream"][zoom>=18], 
+  [class="stream_intermittent"][zoom>=18] {
+    text-size: 11;
+  }
+  [class='river'][zoom=15],
+  [class='canal'][zoom>=17] {
+    text-size: 12;
+  }
+  [class='river'][zoom>=16],
+  [class='canal'][zoom>=18] {
+    text-size: 13;
+  }
+}

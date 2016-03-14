@@ -104,7 +104,7 @@
   [largest_community_name='Welsh']{ polygon-fill: #927d53; }
   [largest_community_name='Haitian']{ polygon-fill: #958153; }
   [largest_community_name='Jamaican']{ polygon-fill: #695653; }
-  ::labels [zoom>=12]{
+  ::labels [zoom>=15]{
     //marker-width:20px;
     text-name: "[largest_community_name]";
     text-transform: uppercase;
@@ -124,7 +124,7 @@
 }
 
 #communities_points {
-  ::labels [zoom<12]{
+  ::labels [zoom<15]{
     //marker-width:20px;
     text-name: "[largest_community_name]";
     text-transform: uppercase;
@@ -144,6 +144,10 @@
 }
 
 #communities_mask {
-  polygon-pattern-file: url(img/texture_3.png);
-  image-filters:agg-stack-blur(50,50);
+  polygon-opacity: 0;
+  polygon-comp-op: src;
+  line-width:8px;
+  line-color:#F1EDE1;
+  line-opacity: 0.2;
+  line-smooth: 0.5;
 }
