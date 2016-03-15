@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<style>
+  body {
+    background-color:rgba(255,255,255,0);
+    /*background-image: url('texture.png');*/
+  }
+  @font-face {
+    font-family: 'MAW';
+    src: url('MAW.ttf');
+  }
+  text {
+    font: 20px "MAW";
+    pointer-events: none;
+    text-transform: uppercase;
+    fill: #333;
+  }
+</style>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 700,
+  height = 700,
+  padding = 20,
+  clusterPadding = 40,
+  maxRadius = 100,
+  minRadius = 40;
+
+d3.csv("community_legend.csv", function(data) {
+  //calculate the maximum group present
+  var m = d3.max(data, function(d){return d.group});
+  var l = d3.max(data, function(d){return d.membership});
+  var s = d3.min(data, function(d){return d.membership});
+  
+  clusters = new Array(m);
+  dataset = data.map(function(d) {
+    var sizeScale = d3.scale.log()
+      .domain([l, s])
+      .range([minRadius,maxRadius]);
+    
+    var dta = {
+      cluster: d.group,
+      largest_community_name: d.largest_community_name,
+      radius: sizeScale(d.membership),
+      color: d.map_color,
+      x: Math.cos(d.group / m * 2 * Math.PI) * 100 + width / 2 + Math.random(),
+      y: Math.sin(d.group / m * 2 * Math.PI) * 100 + height / 2 + Math.random()
+    };
+    console.log(dta)
+    if (!clusters[d.group] || (d.radius > clusters[d.group].radius)) clusters[d.group] = dta;
+    return dta;
+  });
+  //after mapping use that t make the graph
+  makeGraph(dataset);
+});
+
+//this will make the grapg from nodes
+function makeGraph(nodes) {
+  var force = d3.layout.force()
+    .nodes(nodes)
+    .size([width, height])
+    .gravity(0.9)
+    .charge(0.5)
+    .on("tick", tick)
+    .start();
+
+  var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  var node = svg.selectAll("circle")
+    .data(nodes)
+    .enter().append("g").call(force.drag);
+  //addcircle to the group
+  node.append("circle")
+    .style("fill", function(d) {
+      return d.color;
+    })
+    .attr("r", function(d) {
+      return d.radius
+    })
+    .attr('fill-opacity', 0.9)
+  //add text to the group    
+  node.append("text")
+    .text(function(d) {
+      return d.largest_community_name;
+    })
+    .attr("dx", 0)
+    .attr("dy", ".35em")
+    .text(function(d) {
+      return d.largest_community_name
+    })
+    .style("stroke", "none")
+    .style("text-anchor", "middle");
+
+  function tick(e) {
+    node.each(cluster(10 * e.alpha * e.alpha))
+      .each(collide(.5))
+      //.attr("transform", functon(d) {});
+      .attr("transform", function(d) {
+        var k = "translate(" + d.x + "," + d.y + ")";
+        return k;
+      })
+  }
+
+  // Move d to be adjacent to the cluster node.
+  function cluster(alpha) {
+    return function(d) {
+      var cluster = clusters[d.cluster];
+      if (cluster === d) return;
+      var x = d.x - cluster.x,
+        y = d.y - cluster.y,
+        l = Math.sqrt(x * x + y * y),
+        r = d.radius + cluster.radius;
+      if (l != r) {
+        l = (l - r) / l * alpha;
+        d.x -= x *= l;
+        d.y -= y *= l;
+        cluster.x += x;
+        cluster.y += y;
+      }
+    };
+  }
+
+  // Resolves collisions between d and all other circles.
+  function collide(alpha) {
+    var quadtree = d3.geom.quadtree(nodes);
+    return function(d) {
+      var r = d.radius + maxRadius + Math.max(padding, clusterPadding),
+        nx1 = d.x - r,
+        nx2 = d.x + r,
+        ny1 = d.y - r,
+        ny2 = d.y + r;
+      quadtree.visit(function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== d)) {
+          var x = d.x - quad.point.x,
+            y = d.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = d.radius + quad.point.radius + (d.cluster === quad.point.cluster ? padding : clusterPadding);
+          if (l < r) {
+            l = (l - r) / l * alpha;
+            d.x -= x *= l;
+            d.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    };
+  }
+}
+
+</script>

@@ -124,6 +124,21 @@ cp legend.png ../img/
 cp legend.png ../exports/
 cd ../../../
 
+# EXPORT BUBBLE CHART TO PNG FOR LAYOUT
+cd bubbles/
+# START A WEB SERVER
+static -p 8000 "$output""$ext" &
+STATICPID=$!
+sleep 10
+echo 'waiting 10s for server to spin up'
+# EXPORT THE IMAGE
+phantomjs rasterize.js http://localhost:8000/index.html bubbles.png
+# KILL THE WEBSERVER
+kill -s 9 $STATICPID
+cp bubbles.png ../img/
+cp bubbles.png ../exports/
+cd ../../../
+
 # CLEAR OUT THE TEMP DATA TO SAVE SPACE
 rm -rf data/tmp/
 
