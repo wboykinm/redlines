@@ -109,6 +109,8 @@ sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
 # EXPORT LEGEND WITH EMPTY GROUPS REMOVED
 psql communities -c "\\copy (WITH groups AS ( SELECT p.largest_community_name, sum(p.largest_group_count) AS membership, avg(p.largest_group_proportion) AS avg_plurality, t.map_color FROM community_polys p LEFT JOIN community_tracts t ON t.largest_community_name = p.largest_community_name GROUP BY p.largest_community_name, t.map_color ORDER BY p.largest_community_name ASC ) SELECT * FROM groups WHERE membership > 0) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
 
+cp legend/community_legend.csv bubbles/
+
 # EXPORT LEGEND TO PNG FOR LAYOUT
 cd legend/
 # START A WEB SERVER
@@ -122,10 +124,9 @@ phantomjs rasterize.js http://localhost:8000/index.html legend.png
 kill -s 9 $STATICPID
 cp legend.png ../img/
 cp legend.png ../exports/
-cd ../../../
 
 # EXPORT BUBBLE CHART TO PNG FOR LAYOUT
-cd bubbles/
+cd ../bubbles/
 # START A WEB SERVER
 static -p 8000 "$output""$ext" &
 STATICPID=$!
