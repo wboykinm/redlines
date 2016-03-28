@@ -52,6 +52,15 @@ cd ../../processing/join
 npm install
 node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
 
+echo '------------importing geodata (OSM water)------------'
+ #cd ../water
+ #npm install
+ ## get the desired area from OSM:
+ #COMMUNITY_BBOX=$(psql communities -t -c "SELECT '[' || ST_XMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_YMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_XMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_YMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ']' FROM community_tracts ;")
+ #node index.js $COMMUNITY_BBOX $STATE_FIPS $COUNTY_FIPS ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water.geojson
+ #ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water.geojson -nln osm_water -lco PRECISION=NO
+
+
 echo '------------dissolving and eroding community boundaries------------'
 # TODO wanted this to be a DB-free joint, but memory limits are hampering turf. PostGIS for now.
 #cd ../dissolve
@@ -107,7 +116,7 @@ sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
 sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
 
 # EXPORT LEGEND WITH EMPTY GROUPS REMOVED
-psql communities -c "\\copy (WITH groups AS ( SELECT p.largest_community_name, sum(p.largest_group_count) AS membership, avg(p.largest_group_proportion) AS avg_plurality, t.map_color FROM community_polys p LEFT JOIN community_tracts t ON t.largest_community_name = p.largest_community_name GROUP BY p.largest_community_name, t.map_color ORDER BY p.largest_community_name ASC ) SELECT * FROM groups WHERE membership > 0) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
+psql communities -c "\\copy (SELECT * FROM community_legend) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
 
 cp legend/community_legend.csv bubbles/
 
