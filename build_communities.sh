@@ -74,32 +74,32 @@ createdb communities
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis"
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
 ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
-psql communities -f form.sql
+cd ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+psql communities -f ../../processing/form/form.sql
 
 echo '------------exporting final geojson(s)------------'
 # CLEAR THE DECKS
-rm -f ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson
-rm -f ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson
-rm -f ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
+rm -f communities_polys.geojson
+rm -f communities_points.geojson
+rm -f communities_mask.geojson
 
 # EXPORT THE 3 MAP-READY FILES TO THE TMP DATA DIRECTORY
-ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
-ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
-ogr2ogr -f "GeoJSON" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
+ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
+ogr2ogr -f "GeoJSON" communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
+ogr2ogr -f "GeoJSON" communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 # DEFINE DATA LAYER NAMES
 POLYS=$MB_USER.communities_$STATE_FIPS"_"$COUNTY_FIPS
 POINTS=$MB_USER.communities_points_$STATE_FIPS"_"$COUNTY_FIPS
 MASK=$MB_USER.communities_mask_$STATE_FIPS"_"$COUNTY_FIPS
 
 echo '------------uploading geojson to mapbox data'
-cd ../../data/
 export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
-mapbox upload --name communities_polys $POLYS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_polys.geojson
-mapbox upload --name communities_points $POINTS tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_points.geojson
-mapbox upload --name communities_mask $MASK tmp_$STATE_FIPS"_"$COUNTY_FIPS/communities_mask.geojson
+mapbox upload --name communities_polys $POLYS communities_polys.geojson
+mapbox upload --name communities_points $POINTS communities_points.geojson
+mapbox upload --name communities_mask $MASK communities_mask.geojson
 
 echo "------------creating mapbox studio project for $STATE_NAME county $COUNTY_FIPS------------"
-cd ../cartography
+cd ../../cartography
 # CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
 rm -rf tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
 cp -r tribes.tm2 tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
