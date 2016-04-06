@@ -36,6 +36,8 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
 - [csvkit](http://csvkit.readthedocs.org/en/540/)
 - [Mapbox CLI](https://github.com/mapbox/mapbox-cli-py#upload)
 - [Mapbox Studio Classic](https://www.mapbox.com/mapbox-studio-classic/#darwin) (Gotta have that CartoCSS)
+- [Mercantile](https://github.com/mapbox/mercantile/blob/master/docs/cli.rst)
+- [geojson-merge](https://github.com/mapbox/geojson-merge)
 - [phantomjs](http://phantomjs.org/screen-capture.html) (to capture legend images)
 - Census [API key](http://api.census.gov/data/key_signup.html)
 

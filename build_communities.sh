@@ -47,19 +47,32 @@ wget -c ftp://ftp2.census.gov/geo/tiger/TIGER2015/TRACT/tl_2015_$STATE_FIPS"_tra
 unzip tl_2015_$STATE_FIPS"_tract.zip"
 ogr2ogr -t_srs "EPSG:4326" -f GeoJSON -where "COUNTYFP = '$COUNTY_FIPS'" tracts_$COUNTY_FIPS.geojson tl_2015_$STATE_FIPS"_tract.shp"
 
+echo '------------importing geodata (OSM water)------------'
+cd ../water
+npm install
+# get the desired area from OSM:
+COMMUNITY_BBOX=$(psql communities -t -c "SELECT '[' || ST_XMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_YMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_XMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_YMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ']' FROM community_tracts ;")
+# pipe it through a tile cruncher
+echo $COMMUNITY_BBOX | mercantile tiles 12 > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt
+# . . . and then the mapzen api in 6x parallel to get geojson
+cat ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+# combine it all into one beastly geojson for the hell of it
+geojson-merge ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/all_osm_water.geojson
+
+echo '------------running the tile pirahna of water polygons against the tract boundaries------------'
+# get a copy of the tracts to be safe
+cp ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson tmp.geojson
+# run through each water tile, taking a chomp out of the tract polys each time
+for w in $(ls ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson); do
+  node piranha.js tmp.geojson $w
+  sleep 1
+done
+mv tmp.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS"_eaten.geojson"
+
 echo '------------joining attributes to tract boundaries------------'
 cd ../../processing/join
 npm install
-node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
-
-echo '------------importing geodata (OSM water)------------'
- #cd ../water
- #npm install
- ## get the desired area from OSM:
- #COMMUNITY_BBOX=$(psql communities -t -c "SELECT '[' || ST_XMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_YMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_XMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ',' || ST_YMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),2000),4326)) || ']' FROM community_tracts ;")
- #node index.js $COMMUNITY_BBOX $STATE_FIPS $COUNTY_FIPS ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water.geojson
- #ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water.geojson -nln osm_water -lco PRECISION=NO
-
+node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS"_eaten.geojson" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
 
 echo '------------dissolving and eroding community boundaries------------'
 # TODO wanted this to be a DB-free joint, but memory limits are hampering turf. PostGIS for now.
