@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "request": "^2.69.0",
-    "sphericalmercator": "^1.0.4"
+    "turf": "^2.0.2"
   }
 }
