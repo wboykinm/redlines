@@ -34,3 +34,6 @@ node_modules
 data/tmp_*
 *.xcf
 cartography/tribes_*.tm2/
+tmp.geojson
+.DS_Store
+tiles.txt
