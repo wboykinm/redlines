@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var request = require('request');
+var turf = require('turf');
 
 var bigTile = process.argv[2];
 var outDir = process.argv[3];
@@ -40,4 +41,4 @@ var getTile = request(mzUrlBase + z + '/' + x + '/' + y + mzUrlSuffix, function 
   }
 });
 
-getTile();
+getTile;
