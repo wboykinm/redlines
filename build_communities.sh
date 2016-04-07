@@ -48,10 +48,10 @@ unzip tl_2015_$STATE_FIPS"_tract.zip"
 ogr2ogr -t_srs "EPSG:4326" -f GeoJSON -where "COUNTYFP = '$COUNTY_FIPS'" tracts_$COUNTY_FIPS.geojson tl_2015_$STATE_FIPS"_tract.shp"
 
 echo '------------importing geodata (OSM water)------------'
-cd ../water
+cd ../../processing/water
 npm install
-# get the desired area from OSM:
-COMMUNITY_BBOX=$(psql communities -t -c "SELECT '[' || ST_XMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_YMin(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_XMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ',' || ST_YMax(ST_Transform(ST_Expand(ST_Collect(ST_Transform(the_geom,3857)),10000),4326)) || ']' FROM community_tracts ;")
+# get expanded bbox from tracts_$COUNTY_FIPS.geojson
+COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson)
 # pipe it through a tile cruncher
 echo $COMMUNITY_BBOX | mercantile tiles 12 > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt
 # . . . and then the mapzen api in 6x parallel to get geojson
