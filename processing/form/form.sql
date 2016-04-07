@@ -23,7 +23,8 @@ ALTER TABLE community_tracts ALTER COLUMN p0010001 TYPE int USING (p0010001::int
 ALTER TABLE community_tracts ALTER COLUMN largest_group_count TYPE int USING (largest_group_count::int);
 ALTER TABLE community_tracts ALTER COLUMN largest_group_proportion TYPE double precision USING (largest_group_proportion::float);
 ALTER TABLE community_tracts RENAME COLUMN wkb_geometry TO the_geom;
-DELETE FROM community_tracts WHERE p0010001 < 1;
+-- clear tracts with < 30 people (this specifically targets central park)
+DELETE FROM community_tracts WHERE p0010001 < 30;
 -- expand then erode block borders
 DROP TABLE IF EXISTS community_polys;
 CREATE TABLE community_polys AS (
