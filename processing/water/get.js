@@ -16,7 +16,7 @@ var getTile = request(mzUrlBase + z + '/' + x + '/' + y + mzUrlSuffix, function 
   if (error) {
     console.error('encountered error', error instanceof Error ? error.stack : error);
   } else if (response.statusCode === 429) {
-    console.log('error 429')
+    console.log('error 429');
   } else if (response.statusCode !== 200) {
     console.error('non-200 status code: ' + response.statusCode);
   } else if (JSON.parse(body).features.length > 0 ) {
@@ -24,14 +24,20 @@ var getTile = request(mzUrlBase + z + '/' + x + '/' + y + mzUrlSuffix, function 
     var outWater = {"type":"FeatureCollection","features":[]};
     for (var p = 0; p < body.features.length; p++) {
       if (body.features[p].geometry.type == 'Polygon' || body.features[p].geometry.type == 'MultiPolygon') {
-        outWater.features.push(body.features[p]);
+        if (turf.kinks(body.features[p]).intersections.features.length > 0) {
+          console.log('Self-intersecting polygon detected and removed. Intersection(s) at: ');
+          console.log(JSON.stringify(turf.kinks(body.features[p]).intersections));
+        }
+        else {
+          outWater.features.push(body.features[p]);
+        }
       }
     }
     fs.writeFile(outDir + 'osm_water_' + x + '_' + y + '_' + z + '.geojson', JSON.stringify(outWater), 'utf-8');
     console.log('got tile ' + bigTile);
   } else {
-    console.log('no water features')
+    console.log('no water features');
   }
 });
 
-getTile;
+getTile();
