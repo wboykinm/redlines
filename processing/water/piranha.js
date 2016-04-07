@@ -15,7 +15,7 @@ if (piranhas.features.length > 0) {
     if (piranhas.features[p].geometry.type == 'Polygon' || piranhas.features[p].geometry.type == 'MultiPolygon') {
       piranhaPolys.features.push(piranhas.features[p]);
     } 
-  };
+  }
 
   // dissolve the water polygons
   var piranhaPolys = turf.merge(piranhaPolys);
@@ -23,8 +23,9 @@ if (piranhas.features.length > 0) {
   // loop through all tracts looking for intersection
   for (var i = 0; i < tractPolys.features.length; i++) {
     // chomp water from tract polygon if intersecting
+    console.log('Running '+ tractPolys.features[i].properties.TRACTCE)
     if (turf.intersect(piranhaPolys,tractPolys.features[i])) {
-      console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is wet. Chomping . . .')
+      console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is in the water. Chomping . . .')
       tractsEaten.features.push(turf.erase(tractPolys.features[i],piranhaPolys));
     } 
     // otherwise just write the tract polygon as is

@@ -9,6 +9,7 @@ STATE_ABBRV=$2
 STATE_FIPS=$3
 COUNTY_FIPS=$4
 CENSUS_KEY=$5
+TILE_ZOOM=13
 TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
 
 MB_USER=landplanner
@@ -53,7 +54,7 @@ npm install
 # get expanded bbox from tracts_$COUNTY_FIPS.geojson
 COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson)
 # pipe it through a tile cruncher
-echo $COMMUNITY_BBOX | mercantile tiles 12 > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt
+echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt
 # . . . and then the mapzen api in 6x parallel to get geojson
 cat ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
 # combine it all into one beastly geojson for the hell of it
