@@ -11,6 +11,7 @@ COUNTY_FIPS=$4
 CENSUS_KEY=$5
 TILE_ZOOM=12
 TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
+TILES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2ltcjB0MmozMDB0MHY5a2t5c2Fsb3Q0diJ9.3qyTzT995P_Fo1fJ2tyr6A
 
 MB_USER=landplanner
 
@@ -56,9 +57,9 @@ COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$
 # pipe it through a tile cruncher
 echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt
 # . . . and then the mapzen api in 6x parallel to get geojson
-cat ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+cat ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/ $TILES_MB_TOKEN
 # combine it all into one beastly geojson for the hell of it
-geojson-merge ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/all_osm_water.geojson
+# geojson-merge ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/all_osm_water.geojson
 
 echo '------------running the tile pirahna of water polygons against the tract boundaries------------'
 # get a copy of the tracts to be safe
