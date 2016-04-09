@@ -1,11 +1,11 @@
 # Tribes
-A map of aggregate racial/ancestral groups based on [a 1950 map of Chicago](https://upload.wikimedia.org/wikipedia/commons/b/b5/Chicago_Demographics_in_1950_Map.jpg).
+A map of aggregate racial/ancestral groups based on [a map of Chicago ca. 1950](https://upload.wikimedia.org/wikipedia/commons/b/b5/Chicago_Demographics_in_1950_Map.jpg).
 
 ### Then: 
 ![original](original.png)
 
 ### Now:
-![current](current.png)
+![current](nyc_tribes.png)
 
 ## Background
 This is a tough map to recreate with 21st century data. The reason for using an aggregate approach is that the census [only reports ancestry for slightly more than half of the US population](http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_5YR_B04001&prodType=table), including in configurations that fail to represent whole racial/ethnic groups, which are in turn detailed on other tables. In order to capture the conceptual spirit and geographic detail of the original map, it is worthwhile to combine the two in the most-representative way possible.
@@ -38,7 +38,7 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
 - [Mapbox Studio Classic](https://www.mapbox.com/mapbox-studio-classic/#darwin) (Gotta have that CartoCSS)
 - [Mercantile](https://github.com/mapbox/mercantile/blob/master/docs/cli.rst)
 - [geojson-merge](https://github.com/mapbox/geojson-merge)
-- [phantomjs](http://phantomjs.org/screen-capture.html) (to capture legend images)
+- [phantomjs](http://phantomjs.org/screen-capture.html) (to capture chart images)
 - Census [API key](http://api.census.gov/data/key_signup.html)
 
 In theory this will work for any county in the country. Set location parameters as arguments in the order below:
