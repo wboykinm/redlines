@@ -3,9 +3,8 @@
 var fs = require('fs');
 var request = require('request');
 var turf = require('turf');
-var Pbf = require('pbf');
-var geobuf = require('geobuf');
-
+var Protobuf = require('pbf');
+var VectorTile = require('vector-tile').VectorTile;;
 
 var bigTile = process.argv[2];
 var outDir = process.argv[3];

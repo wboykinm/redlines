@@ -1,6 +1,6 @@
 {
   "name": "water",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "geobuf": "^2.0.0",
     "pbf": "^1.3.5",
     "request": "^2.69.0",
-    "turf": "^2.0.2"
+    "turf": "^2.0.2",
+    "vector-tile": "^1.2.0"
   }
 }
