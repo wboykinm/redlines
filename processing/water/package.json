@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "geobuf": "^2.0.0",
+    "pbf": "^1.3.5",
     "request": "^2.69.0",
     "turf": "^2.0.2"
   }
