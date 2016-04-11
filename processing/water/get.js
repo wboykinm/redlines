@@ -27,14 +27,14 @@ var getTile = request({url: mbUrlBase + z + '/' + x + '/' + y + mbUrlSuffix, gzi
     var buf = new Protobuf(body);
     var vt = new VectorTile(buf);
     var layer = vt.layers['water'];
-    
-    if (layer.length > 0) {
+    if (layer && layer.length > 0) {
       var waterSet = {"type":"FeatureCollection","features":[]};
       for (var i = 0; i < layer.length; i++) {
-        var feature = layer.feature(i).toGeoJSON();      
+        var feature = layer.feature(i).toGeoJSON(x,y,z);      
         waterSet.features.push(feature);
       }
-      console.log(JSON.stringify(waterSet));
+      fs.writeFile(outDir + 'osm_water_' + x + '_' + y + '_' + z + '.geojson', JSON.stringify(waterSet), 'utf-8');
+      console.log('got tile ' + bigTile);
     }
     else {
       console.log('no water features at tile {' + z + '}/{' + x + '}/{' + y + '}')
