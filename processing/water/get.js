@@ -9,7 +9,7 @@ var VectorTile = require('vector-tile').VectorTile;
 var bigTile = process.argv[2];
 var outDir = process.argv[3];
 var mbToken = process.argv[4];
-var mbUrlBase = 'http://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v5/';
+var mbUrlBase = 'http://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v7/';
 var mbUrlSuffix = '.vector.pbf?access_token=' + mbToken;
 
 var x = JSON.parse(bigTile)[0];
@@ -34,7 +34,7 @@ var getTile = request({url: mbUrlBase + z + '/' + x + '/' + y + mbUrlSuffix, gzi
         waterSet.features.push(feature);
       }
       fs.writeFile(outDir + 'osm_water_' + x + '_' + y + '_' + z + '.geojson', JSON.stringify(waterSet), 'utf-8');
-      console.log('got tile ' + bigTile);
+      console.log('got tile {' + z + '}/{' + x + '}/{' + y + '}');
     }
     else {
       console.log('no water features at tile {' + z + '}/{' + x + '}/{' + y + '}')
