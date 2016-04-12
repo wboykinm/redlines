@@ -18,8 +18,8 @@ if (piranhas.features.length > 0) {
   }
 
   try {
-    // expand everything by 50m to catch intersections
-    // piranhaPolys = turf.buffer(piranhaPolys,0.05,'kilometers');
+    // expand everything by 20m to catch intersections
+    piranhaPolys = turf.buffer(piranhaPolys,0.02,'kilometers');
     // dissolve the water features
     piranhaPolys = turf.merge(piranhaPolys);
   }
