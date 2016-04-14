@@ -24,21 +24,31 @@ if (piranhas.features.length > 0) {
     piranhaPolys = turf.merge(piranhaPolys);
   }
   catch (e) {
+    console.log('********* TILE FAILURE ON ' + process.argv[3] + '*****************')
+    console.log('BUFFER FAILURE')
     console.log(e);
+    console.log('*******************************************************************')
   }
 
   // loop through all tracts looking for intersection
   for (var i = 0; i < tractPolys.features.length; i++) {
     // chomp water from tract polygon if intersecting
-    if (turf.intersect(piranhaPolys,tractPolys.features[i])) {
-      console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is in the water. Chomping . . .')
-      tractsEaten.features.push(turf.erase(tractPolys.features[i],piranhaPolys));
-    } 
-    // otherwise just write the tract polygon as is
-    else {
-      //console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is dry.')
-      tractsEaten.features.push(tractPolys.features[i])
-    }
+    try {
+      if (turf.intersect(piranhaPolys,tractPolys.features[i])) {
+        console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is in the water. Chomping . . .')
+        tractsEaten.features.push(turf.erase(tractPolys.features[i],piranhaPolys));
+      } 
+      // otherwise just write the tract polygon as is
+      else {
+        //console.log('Tract ' + tractPolys.features[i].properties.TRACTCE + ' is dry.')
+        tractsEaten.features.push(tractPolys.features[i])
+      }
+    } catch (e) {
+      console.log('********* TILE FAILURE ON ' + process.argv[3] + '*****************')
+      console.log('INTERSECT FAILURE')
+      console.log(e);
+      console.log('*******************************************************************')
+    }   
   }
 
   //cut and print to file
