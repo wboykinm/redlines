@@ -12,7 +12,6 @@ CENSUS_KEY=$5
 TILE_ZOOM=11
 TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
 TILES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2ltcjB0MmozMDB0MHY5a2t5c2Fsb3Q0diJ9.3qyTzT995P_Fo1fJ2tyr6A
-
 MB_USER=landplanner
 
 echo '------------cleaning house------------'
@@ -59,37 +58,48 @@ echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_FIPS"
 # . . . and then the mapzen api in 6x parallel to get geojson
 cat ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/ $TILES_MB_TOKEN
 # combine it all into one beastly geojson for the hell of it
-# geojson-merge ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/all_osm_water.geojson
-
-echo '------------running the tile pirahna of water polygons against the tract boundaries------------'
-# get a copy of the tracts to be safe
-cp ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson tmp.geojson
-# run through each water tile, taking a chomp out of the tract polys each time
-for w in $(ls ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson); do
-  node piranha.js tmp.geojson $w
-  sleep 1
-done
-mv tmp.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS"_eaten.geojson"
+geojson-merge ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/osm_water*.geojson > ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/all_osm_water.geojson
 
 echo '------------joining attributes to tract boundaries------------'
 cd ../../processing/join
 npm install
-node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS"_eaten.geojson" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
+node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
 
-echo '------------dissolving and eroding community boundaries------------'
-# TODO wanted this to be a DB-free joint, but memory limits are hampering turf. PostGIS for now.
-#cd ../dissolve
-#npm install
-cd ../form
-#npm install
-#node index.js ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/tracts_$COUNTY_FIPS.geojson
-#mv erodedTracts.geojson ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+echo '------------moving it all into postgis------------'
 dropdb communities
 createdb communities
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis"
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
-ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
 cd ../../data/tmp_$STATE_FIPS"_"$COUNTY_FIPS/
+psql communities -c "DROP TABLE IF EXISTS community_tracts"
+ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
+psql communities -c "CREATE TABLE tracts_backfill AS (SELECT * FROM community_tracts)"
+
+echo '------------remove water polygons from the tract boundaries------------'
+for g in $(ls osm_water*.geojson); do
+  ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" $g -nln water_tile -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
+  # fix what polygons can be fixed
+  psql communities -c "DROP TABLE IF EXISTS valid_water"
+  psql communities -c "CREATE TABLE valid_water AS ( SELECT ST_Makevalid(wkb_geometry) AS the_geom FROM water_tile)"
+  # blow away the small ones
+  psql communities -c "DELETE FROM valid_water WHERE ST_Area( ST_Transform( the_geom, 3857 ) ) < 500000"
+  POND_COUNT=$(psql communities -t -c "SELECT count(*) FROM valid_water")
+  if [ $POND_COUNT = 0 ]; then 
+    echo "no large-ish water bodies"
+    psql communities -c "DROP TABLE IF EXISTS water_tile"
+    psql communities -c "DROP TABLE IF EXISTS valid_water"
+  else
+    psql communities -f ../../processing/water/piranha.sql
+    sleep 2
+    echo "chomped $POND_COUNT water bodies in tile $g"
+  fi
+done
+psql communities -c "DROP TABLE IF EXISTS backfilled_tracts"
+psql communities -c "CREATE TABLE backfilled_tracts AS (SELECT * FROM tracts_backfill WHERE geoid NOT IN (SELECT geoid FROM community_tracts) UNION ALL SELECT * FROM community_tracts)"
+psql communities -c "DROP TABLE IF EXISTS community_tracts"
+psql communities -c "ALTER TABLE backfilled_tracts RENAME TO community_tracts"
+
+echo '------------dissolving and eroding community boundaries------------'
 psql communities -f ../../processing/form/form.sql
 
 echo '------------exporting final geojson(s)------------'
