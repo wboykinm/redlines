@@ -78,8 +78,21 @@ psql communities -c "CREATE TABLE tracts_backfill AS (SELECT * FROM community_tr
 echo '------------remove water polygons from the tract boundaries------------'
 for g in $(ls osm_water*.geojson); do
   ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" $g -nln water_tile -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
-  psql communities -f ../../processing/water/piranha.sql
-  echo "chomped tile $g"
+  # fix what polygons can be fixed
+  psql communities -c "DROP TABLE IF EXISTS valid_water"
+  psql communities -c "CREATE TABLE valid_water AS ( SELECT ST_Makevalid(wkb_geometry) AS the_geom FROM water_tile)"
+  # blow away the small ones
+  psql communities -c "DELETE FROM valid_water WHERE ST_Area( ST_Transform( the_geom, 3857 ) ) < 500000"
+  POND_COUNT=$(psql communities -t -c "SELECT count(*) FROM valid_water")
+  if [ $POND_COUNT = 0 ]; then 
+    echo "no large-ish water bodies"
+    psql communities -c "DROP TABLE IF EXISTS water_tile"
+    psql communities -c "DROP TABLE IF EXISTS valid_water"
+  else
+    psql communities -f ../../processing/water/piranha.sql
+    sleep 2
+    echo "chomped $POND_COUNT water bodies in tile $g"
+  fi
 done
 psql communities -c "DROP TABLE IF EXISTS backfilled_tracts"
 psql communities -c "CREATE TABLE backfilled_tracts AS (SELECT * FROM tracts_backfill WHERE geoid NOT IN (SELECT geoid FROM community_tracts) UNION ALL SELECT * FROM community_tracts)"
