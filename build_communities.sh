@@ -123,16 +123,35 @@ mapbox upload --name communities_polys $POLYS communities_polys.geojson
 mapbox upload --name communities_points $POINTS communities_points.geojson
 mapbox upload --name communities_mask $MASK communities_mask.geojson
 
-echo "------------creating mapbox studio project for $STATE_NAME county $COUNTY_FIPS------------"
+echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../../cartography
 # CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
-rm -rf tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
+rm -rf tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2 tribes-seg_$STATE_FIPS"_"$COUNTY_FIPS.tm2 tribes-pop_$STATE_FIPS"_"$COUNTY_FIPS.tm2 
 cp -r tribes.tm2 tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2
-cd tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2/
+cp -r tribes-seg.tm2 tribes-seg_$STATE_FIPS"_"$COUNTY_FIPS.tm2
+cp -r tribes-pop.tm2 tribes-pop_$STATE_FIPS"_"$COUNTY_FIPS.tm2
+
 # GET CENTROID OF COUNTY
 COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
 COUNTY_LON=$(psql communities -t -c "SELECT ST_X(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
-# REWRITE PROJECT CONFIG FILE
+# REWRITE PROJECT CONFIG FILES
+cd tribes-seg_$STATE_FIPS"_"$COUNTY_FIPS.tm2/
+sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
+sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
+sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
+sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
+sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
+sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
+
+cd ../tribes-pop_$STATE_FIPS"_"$COUNTY_FIPS.tm2/
+sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
+sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
+sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
+sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
+sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
+sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
+
+cd ../tribes_$STATE_FIPS"_"$COUNTY_FIPS.tm2/
 sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
 sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
 sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
