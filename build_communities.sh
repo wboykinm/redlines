@@ -99,6 +99,8 @@ psql communities -c "CREATE TABLE backfilled_tracts AS (SELECT * FROM tracts_bac
 psql communities -c "DROP TABLE IF EXISTS community_tracts"
 psql communities -c "ALTER TABLE backfilled_tracts RENAME TO community_tracts"
 
+# TODO EXPORT GEOJSON OF UNDISSOLVED TRACTS WITH POPULATION AND LARGEST-GROUP PLURALITY
+
 echo '------------dissolving and eroding community boundaries------------'
 psql communities -f ../../processing/form/form.sql
 
@@ -109,19 +111,21 @@ rm -f communities_points.geojson
 rm -f communities_mask.geojson
 
 # EXPORT THE 3 MAP-READY FILES TO THE TMP DATA DIRECTORY
-ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
+  ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 # DEFINE DATA LAYER NAMES
 POLYS=$MB_USER.communities_$STATE_FIPS"_"$COUNTY_FIPS
 POINTS=$MB_USER.communities_points_$STATE_FIPS"_"$COUNTY_FIPS
 MASK=$MB_USER.communities_mask_$STATE_FIPS"_"$COUNTY_FIPS
+TRACTS=$MB_USER.communities_tracts_$STATE_FIPS"_"$COUNTY_FIPS
 
 echo '------------uploading geojson to mapbox data'
 export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
 mapbox upload --name communities_polys $POLYS communities_polys.geojson
 mapbox upload --name communities_points $POINTS communities_points.geojson
 mapbox upload --name communities_mask $MASK communities_mask.geojson
+mapbox upload --name communities_tracts $TRACTS community_tracts_$COUNTY_FIPS.geojson
 
 echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../../cartography
