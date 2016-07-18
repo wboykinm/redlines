@@ -40,18 +40,19 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
 - [geojson-merge](https://github.com/mapbox/geojson-merge)
 - [phantomjs](http://phantomjs.org/screen-capture.html) (to capture chart images)
 - Census [API key](http://api.census.gov/data/key_signup.html)
+- [jq](https://stedolan.github.io/jq/) for json parsing in bash
 
 In theory this will work for any county in the country. Set location parameters as arguments in the order below:
 
 ```bash
-bash build_communities.sh <State name> <state abbreviation> <state_fips> <county_fips> <census key>
+bash build_communities.sh <state abbreviation (e.g. 'MA')> <county name (e.g. 'Suffolk')>
 ```
 
 e.g. this:
 ```
-bash build_communities.sh "New York" ny 36 081 <census_api_key>
+bash build_communities.sh MA Suffolk
 ```
- . . . will get you a map of Queens, NY
+ . . . will get you a map of Suffolk county (Boston), MA
 
 ## Assumptions (a running list)
  - __Meta-assumption: ancestry can be inferred by race.__ This is a dramatic oversimplification, to say the least.
