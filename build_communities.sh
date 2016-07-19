@@ -116,7 +116,7 @@ psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_cou
 psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_proportion TYPE float USING largest_group_proportion::float"
 psql communities -c "ALTER TABLE community_tracts ADD COLUMN population_density int"
 # calc populatioln density using albers because mercator was just comprehensively awful for everything
-psql communities -c "UPDATE community_tracts SET population_density = round(total_population/(ST_Area(ST_Transform(the_geom,2163))/1000000))"
+psql communities -c "UPDATE community_tracts SET population_density = round(total_population/(ST_Area(ST_Transform(wkb_geometry,2163))/1000000))"
 
 echo '------------dissolving and eroding community boundaries------------'
 psql communities -f ../../processing/form/form.sql

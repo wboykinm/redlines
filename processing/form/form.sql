@@ -30,12 +30,11 @@ $$
   COST 100;
 
 -- Lay the groundwork
-ALTER TABLE community_tracts ALTER COLUMN p0010001 TYPE int USING (p0010001::int);
 ALTER TABLE community_tracts ALTER COLUMN largest_group_count TYPE int USING (largest_group_count::int);
 ALTER TABLE community_tracts ALTER COLUMN largest_group_proportion TYPE double precision USING (largest_group_proportion::float);
 ALTER TABLE community_tracts RENAME COLUMN wkb_geometry TO the_geom;
 -- clear tracts with < 30 people (this specifically targets central park)
-DELETE FROM community_tracts WHERE p0010001 < 30;
+DELETE FROM community_tracts WHERE total_population < 30;
 -- expand then erode block borders
 DROP TABLE IF EXISTS community_polys;
 CREATE TABLE community_polys AS (
@@ -73,7 +72,7 @@ CREATE TABLE community_polys AS (
     ST_Simplify(e.the_geom,0.0005) AS the_geom,
     avg(c.largest_group_proportion) AS largest_group_proportion,
     sum(c.largest_group_count) AS largest_group_count,
-    sum(c.p0010001) AS total_population
+    sum(c.total_population) AS total_population
   FROM explosions e
   LEFT JOIN community_tracts c 
   ON ST_Intersects(e.the_geom,ST_Centroid(c.the_geom))
