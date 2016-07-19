@@ -1,3 +1,4 @@
+// Use for tribes
 #communities_polys {
   line-color: #FFF;
   line-width: 0;
@@ -143,6 +144,54 @@
   }
 }
 
+
+// Use for segregation
+/*#communities_tracts {
+  line-width: 0;
+  line-opacity: 1;
+  polygon-smooth:0.1;
+  polygon-opacity:0.9; 
+  polygon-fill: #e66101;
+  [largest_group_proportion<0.1]{ polygon-opacity: 0 }
+  [largest_group_proportion>=0.1][largest_group_proportion<0.2]{ polygon-opacity: 0.1 }
+  [largest_group_proportion>=0.2][largest_group_proportion<0.3]{ polygon-opacity: 0.2 }
+  [largest_group_proportion>=0.3][largest_group_proportion<0.4]{ polygon-opacity: 0.3 }
+  [largest_group_proportion>=0.4][largest_group_proportion<0.5]{ polygon-opacity: 0.4 }
+  [largest_group_proportion>=0.5][largest_group_proportion<0.6]{ polygon-opacity: 0.5 }
+  [largest_group_proportion>=0.6][largest_group_proportion<0.7]{ polygon-opacity: 0.7 }
+  [largest_group_proportion>=0.7][largest_group_proportion<0.8]{ polygon-opacity: 0.8 }
+  [largest_group_proportion>=0.8][largest_group_proportion<0.9]{ polygon-opacity: 0.9 }
+  [largest_group_proportion>=1]{ polygon-opacity: 1 }
+}*/
+// Use for population density
+/*#communities_tracts {
+  line-width: 0;
+  line-opacity: 1;
+  polygon-smooth:0.1;
+  polygon-opacity:0.9; 
+  polygon-fill: #5e3c99;
+  [population_density<50]{ polygon-opacity: 0 }
+  [population_density>=50][population_density<100]{ polygon-opacity: 0.1 }
+  [population_density>=100][population_density<250]{ polygon-opacity: 0.2 }
+  [population_density>=250][population_density<500]{ polygon-opacity: 0.3 }
+  [population_density>=500][population_density<1000]{ polygon-opacity: 0.4 }
+  [population_density>=1000][population_density<2000]{ polygon-opacity: 0.5 }
+  [population_density>=2000][population_density<3000]{ polygon-opacity: 0.7 }
+  [population_density>=3000][population_density<5000]{ polygon-opacity: 0.8 }
+  [population_density>=5000][population_density<7500]{ polygon-opacity: 0.9 }
+  [population_density>=7500]{ polygon-opacity: 1 }
+}
+*/
+// use for tribes overlay
+/*#communities_polys {
+  line-color: #333;
+  line-width: 3;
+  line-offset:2;
+  line-opacity: 1;
+  polygon-opacity: 0;
+}
+*/
+// mask for all configurations
 #communities_mask {
   polygon-opacity: 0;
   polygon-comp-op: src;

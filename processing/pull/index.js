@@ -7,11 +7,13 @@ var request = require('request');
 var collectionType = process.argv[2];
 var urlBase = 'http://api.census.gov/data/2010/';
 var censusKey = process.argv[3];
-var stateFips = process.argv[4];
-var countyFips = process.argv[5];
+var stateFips = parseInt(process.argv[4]);
+var countyFips = parseInt(process.argv[5]);
+var stateAbbrv = process.argv[6];
+var countyName = process.argv[7];
 var fields = [];
 
-var outFile = fs.createWriteStream('../../data/tmp_' + stateFips + '_' + countyFips + '/' + collectionType + '.csv');
+var outFile = fs.createWriteStream('../../data/tmp_' + stateAbbrv + '_' + countyName + '/' + collectionType + '.csv');
 
 // get fields from key csv
 csv
@@ -27,9 +29,10 @@ csv
       .replace('[','')
       .replace(']','')
       .replace(/"/g,'');
-    
+    var url = urlBase + collectionType + '?key=' + censusKey + '&get=' + fields + '&for=tract:*&in=state:' + stateFips + '+county:' + countyFips;
+
     // grab data by tract, pipe to csv in data/tmp/
-    request(urlBase + collectionType + '?key=' + censusKey + '&get=' + fields + '&for=tract:*&in=state:' + stateFips + '+county:' + countyFips, function (error, response, body) {
+    request(url, function (error, response, body) {
       if (error) {
         console.error('encountered error', error instanceof Error ? error.stack : error);
       } else if (response.statusCode === 429) {

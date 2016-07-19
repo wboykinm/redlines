@@ -5,7 +5,7 @@ var csv = require('fast-csv');
 var outFile = '../../data/tmp_' + process.argv[4] + '_' + process.argv[5] + '/community_tracts_' + process.argv[5] + '.geojson';
 var geo_key = 'TRACTCE';
 var tab_key = 'tract';
-
+console.log(process.argv[3])
 var geo_data = JSON.parse(fs.readFileSync(process.argv[2]));
 var tab_data = [];
 var joined_data;
@@ -20,6 +20,6 @@ csv
  })
  .on("end", function(){
    joined_data = joiner.geoJson(geo_data, geo_key, tab_data, tab_key);
-   //console.log(joined_data.data.features);
+   console.log(joined_data.data.features);
    fs.writeFile(outFile, JSON.stringify(joined_data.data) , 'utf-8');
  });

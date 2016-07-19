@@ -26,7 +26,9 @@ layers:
   - road
   - bridge
   - admin
+  - communities_tracts
   - communities_polys
+  - communities_tracts
   - communities_points
   - country_label_line
   - country_label
@@ -42,7 +44,7 @@ layers:
 maxzoom: 21
 minzoom: 0
 name: Tribes
-source: "mapbox:///mapbox.mapbox-terrain-v1,mapbox.mapbox-streets-v5,mapbox.mapbox-bathymetry-v1,landplanner.0xsgug3g,landplanner.69rz84n1,landplanner.0ufuyubk"
+source: "mapbox:///mapbox.mapbox-terrain-v1,mapbox.mapbox-streets-v5,mapbox.mapbox-bathymetry-v1,landplanner.0xsgug3g,landplanner.69rz84n1,landplanner.0ufuyubk,landplanner.placeholder"
 styles: 
   - style.mss
   - road.mss

@@ -1,17 +1,25 @@
 # Build the dataset for a modern demographic map
 # USAGE: bash build_communities.sh <state abbreviation (e.g. 'MA')> <county name (e.g. 'Suffolk')>
 
-# params
+# params (ncluding ridiculous handlers for extra quotes, caps, spaces, and apostrophes)
 set -eo pipefail
 DATE=`date +%Y_%m_%d`
-STATE_ABBRV=$1
+STATE_ABBRV=$(echo $1 | awk '{print tolower($0)}')
 LOCATION_DETAILS=$(csvgrep -c 1 -m $1 data/census_fips_codes.csv | csvgrep -c 5 -m $2 | csvjson)
 STATE_NAME=$(echo $LOCATION_DETAILS | jq '.[0].state_long')
+STATE_NAME="${STATE_NAME%\"}"
+STATE_NAME="${STATE_NAME#\"}"
 STATE_FIPS=$(echo $LOCATION_DETAILS | jq '.[0].state_fips')
+STATE_FIPS="${STATE_FIPS%\"}"
+STATE_FIPS="${STATE_FIPS#\"}"
 COUNTY_FIPS=$(echo $LOCATION_DETAILS | jq '.[0].county_fips')
+COUNTY_FIPS="${COUNTY_FIPS%\"}"
+COUNTY_FIPS="${COUNTY_FIPS#\"}"
 COUNTY_NAME=$(echo $LOCATION_DETAILS | jq '.[0].county')
 COUNTY_NAME="${COUNTY_NAME//[ ,\']/_}"
 COUNTY_NAME=$(echo $COUNTY_NAME | awk '{print tolower($0)}')
+COUNTY_NAME="${COUNTY_NAME%\"}"
+COUNTY_NAME="${COUNTY_NAME#\"}"
 TILE_ZOOM=11
 CENSUS_KEY=6cf83ef5cf4401ace5c8dcccae0bd9ca2999aeb1
 TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
@@ -28,9 +36,9 @@ echo '------------getting ancestry and race data------------'
 cd processing/pull
 npm install
 echo 'getting decennial census data'
-node index.js sf1 $CENSUS_KEY $STATE_FIPS $COUNTY_FIPS
+node index.js sf1 $CENSUS_KEY $STATE_FIPS $COUNTY_FIPS $STATE_ABBRV $COUNTY_NAME
 echo 'getting american community survey data'
-node index.js acs5 $CENSUS_KEY $STATE_FIPS $COUNTY_FIPS
+node index.js acs5 $CENSUS_KEY $STATE_FIPS $COUNTY_FIPS $STATE_ABBRV $COUNTY_NAME
 cd ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/
 csvjoin -c "tract" sf1.csv acs5.csv > community_attributes.csv
 csvcut -c 49-51,1-48,52-104 community_attributes.csv > community_attributes_ordered.csv
@@ -59,7 +67,7 @@ npm install
 COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson)
 # pipe it through a tile cruncher
 echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt
-# . . . and then the mapzen api in 6x parallel to get geojson
+# . . . and then the mapbox api in 6x parallel to get geojson
 cat ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/ $TILES_MB_TOKEN
 # combine it all into one beastly geojson for the hell of it
 geojson-merge ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/osm_water*.geojson > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/all_osm_water.geojson
@@ -67,7 +75,7 @@ geojson-merge ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/osm_water*.geojson > ..
 echo '------------joining attributes to tract boundaries------------'
 cd ../../processing/join
 npm install
-node index.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/community_properties_light.csv $STATE_FIPS $COUNTY_FIPS
+node index.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/community_properties_light.csv $STATE_ABBRV $COUNTY_NAME
 
 echo '------------moving it all into postgis------------'
 dropdb communities
@@ -76,7 +84,7 @@ psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis"
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
 cd ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/
 psql communities -c "DROP TABLE IF EXISTS community_tracts"
-ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" community_tracts_$COUNTY_FIPS.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
+ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" community_tracts_$COUNTY_NAME.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
 psql communities -c "CREATE TABLE tracts_backfill AS (SELECT * FROM community_tracts)"
 
 echo '------------remove water polygons from the tract boundaries------------'
@@ -102,8 +110,13 @@ psql communities -c "DROP TABLE IF EXISTS backfilled_tracts"
 psql communities -c "CREATE TABLE backfilled_tracts AS (SELECT * FROM tracts_backfill WHERE geoid NOT IN (SELECT geoid FROM community_tracts) UNION ALL SELECT * FROM community_tracts)"
 psql communities -c "DROP TABLE IF EXISTS community_tracts"
 psql communities -c "ALTER TABLE backfilled_tracts RENAME TO community_tracts"
-
-# TODO EXPORT GEOJSON OF UNDISSOLVED TRACTS WITH POPULATION AND LARGEST-GROUP PLURALITY
+psql communities -c "ALTER TABLE community_tracts ALTER COLUMN p0010001 TYPE int USING p0010001::int"
+psql communities -c "ALTER TABLE community_tracts RENAME COLUMN p0010001 TO total_population"
+psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_count TYPE int USING largest_group_count::int"
+psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_proportion TYPE float USING largest_group_proportion::float"
+psql communities -c "ALTER TABLE community_tracts ADD COLUMN population_density int"
+# calc populatioln density using albers because mercator was just comprehensively awful for everything
+psql communities -c "UPDATE community_tracts SET population_density = round(total_population/(ST_Area(ST_Transform(the_geom,2163))/1000000))"
 
 echo '------------dissolving and eroding community boundaries------------'
 psql communities -f ../../processing/form/form.sql
@@ -113,57 +126,43 @@ echo '------------exporting final geojson(s)------------'
 rm -f communities_polys.geojson
 rm -f communities_points.geojson
 rm -f communities_mask.geojson
+rm -f communities_tracts.geojson
 
 # EXPORT THE 3 MAP-READY FILES TO THE TMP DATA DIRECTORY
-  ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
+ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_polys WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
+ogr2ogr -f "GeoJSON" communities_tracts.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_tracts WHERE largest_group_count > 0 AND total_population > 0"
 # DEFINE DATA LAYER NAMES
-POLYS=$MB_USER.communities_$STATE_ABBRV"_"$COUNTY_NAME
-POINTS=$MB_USER.communities_points_$STATE_ABBRV"_"$COUNTY_NAME
-MASK=$MB_USER.communities_mask_$STATE_ABBRV"_"$COUNTY_NAME
-TRACTS=$MB_USER.communities_tracts_$STATE_ABBRV"_"$COUNTY_NAME
+POLYS=$MB_USER.tribes_$STATE_ABBRV"_"$COUNTY_NAME
+POINTS=$MB_USER.tribes_points_$STATE_ABBRV"_"$COUNTY_NAME
+MASK=$MB_USER.tribes_mask_$STATE_ABBRV"_"$COUNTY_NAME
+TRACTS=$MB_USER.tribes_tracts_$STATE_ABBRV"_"$COUNTY_NAME
 
 echo '------------uploading geojson to mapbox data'
 export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
 mapbox upload --name communities_polys $POLYS communities_polys.geojson
 mapbox upload --name communities_points $POINTS communities_points.geojson
 mapbox upload --name communities_mask $MASK communities_mask.geojson
-mapbox upload --name communities_tracts $TRACTS community_tracts_$COUNTY_FIPS.geojson
+mapbox upload --name communities_tracts $TRACTS communities_tracts.geojson
 
 echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../../cartography
 # CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
-rm -rf tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2 tribes-seg_$STATE_ABBRV"_"$COUNTY_NAME.tm2 tribes-pop_$STATE_ABBRV"_"$COUNTY_NAME.tm2 
+rm -rf tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2
 cp -r tribes.tm2 tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2
-cp -r tribes-seg.tm2 tribes-seg_$STATE_ABBRV"_"$COUNTY_NAME.tm2
-cp -r tribes-pop.tm2 tribes-pop_$STATE_ABBRV"_"$COUNTY_NAME.tm2
 
 # GET CENTROID OF COUNTY
 COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
 COUNTY_LON=$(psql communities -t -c "SELECT ST_X(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
+
 # REWRITE PROJECT CONFIG FILES
-cd tribes-seg_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
-sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
+cd tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
+sed -i tmp2.bak "s/name: Tribes/name: Tribes - $COUNTY_NAME, $STATE_NAME/g" project.yml
 sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
 sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
 sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
-sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
-sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
-
-cd ../tribes-pop_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
-sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
-sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
-sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
-sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
-sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
-sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
-
-cd ../tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
-sed -i tmp2.bak "s/name: Tribes/name: Tribes - $STATE_NAME county $COUNTY_FIPS/g" project.yml
-sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
-sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
-sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
+sed -i tmp3.bak "s/landplanner.placeholder/$TRACTS/g" project.yml
 sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
 sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
 
