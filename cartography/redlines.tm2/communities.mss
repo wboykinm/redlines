@@ -1,4 +1,4 @@
-// Use for tribes
+// Use for redlines
 #communities_polys {
   line-color: #FFF;
   line-width: 0;
@@ -182,7 +182,7 @@
   [population_density>=7500]{ polygon-opacity: 1 }
 }
 */
-// use for tribes overlay
+// use for redlines overlay
 /*#communities_polys {
   line-color: #333;
   line-width: 3;

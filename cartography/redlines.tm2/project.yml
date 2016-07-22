@@ -43,7 +43,7 @@ layers:
   - communities_mask
 maxzoom: 21
 minzoom: 0
-name: Tribes
+name: Redlines
 source: "mapbox:///mapbox.mapbox-terrain-v1,mapbox.mapbox-streets-v5,mapbox.mapbox-bathymetry-v1,landplanner.0xsgug3g,landplanner.69rz84n1,landplanner.0ufuyubk,landplanner.placeholder"
 styles: 
   - style.mss

@@ -22,7 +22,7 @@ COUNTY_NAME="${COUNTY_NAME%\"}"
 COUNTY_NAME="${COUNTY_NAME#\"}"
 TILE_ZOOM=11
 CENSUS_KEY=6cf83ef5cf4401ace5c8dcccae0bd9ca2999aeb1
-TRIBES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
+REDLINES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2lsaXFkMng1M2NxMXY2bTBvaXQ0Z2N0eCJ9.dl5GmYgdPdNupaYxk8y16g
 TILES_MB_TOKEN=sk.eyJ1IjoibGFuZHBsYW5uZXIiLCJhIjoiY2ltcjB0MmozMDB0MHY5a2t5c2Fsb3Q0diJ9.3qyTzT995P_Fo1fJ2tyr6A
 MB_USER=landplanner
 
@@ -134,13 +134,13 @@ ogr2ogr -f "GeoJSON" communities_points.geojson PG:"host=localhost dbname=commun
 ogr2ogr -f "GeoJSON" communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 ogr2ogr -f "GeoJSON" communities_tracts.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_tracts WHERE largest_group_count > 0 AND total_population > 0"
 # DEFINE DATA LAYER NAMES
-POLYS=$MB_USER.tribes_$STATE_ABBRV"_"$COUNTY_NAME
-POINTS=$MB_USER.tribes_points_$STATE_ABBRV"_"$COUNTY_NAME
-MASK=$MB_USER.tribes_mask_$STATE_ABBRV"_"$COUNTY_NAME
-TRACTS=$MB_USER.tribes_tracts_$STATE_ABBRV"_"$COUNTY_NAME
+POLYS=$MB_USER.rl_$STATE_ABBRV"_"$COUNTY_NAME
+POINTS=$MB_USER.rl_points_$STATE_ABBRV"_"$COUNTY_NAME
+MASK=$MB_USER.rl_mask_$STATE_ABBRV"_"$COUNTY_NAME
+TRACTS=$MB_USER.rl_tracts_$STATE_ABBRV"_"$COUNTY_NAME
 
 echo '------------uploading geojson to mapbox data'
-export MAPBOX_ACCESS_TOKEN=$TRIBES_MB_TOKEN
+export MAPBOX_ACCESS_TOKEN=$REDLINES_MB_TOKEN
 mapbox upload --name communities_polys $POLYS communities_polys.geojson
 mapbox upload --name communities_points $POINTS communities_points.geojson
 mapbox upload --name communities_mask $MASK communities_mask.geojson
@@ -149,15 +149,15 @@ mapbox upload --name communities_tracts $TRACTS communities_tracts.geojson
 echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../../cartography
 # CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
-rm -rf tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2
-cp -r tribes.tm2 tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2
+rm -rf rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
+cp -r redlines.tm2 rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
 
 # GET CENTROID OF COUNTY
 COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
 COUNTY_LON=$(psql communities -t -c "SELECT ST_X(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
 
 # REWRITE PROJECT CONFIG FILES
-cd tribes_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
+cd rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
 sed -i tmp2.bak "s/name: Tribes/name: Tribes - $COUNTY_NAME, $STATE_NAME/g" project.yml
 sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
 sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
