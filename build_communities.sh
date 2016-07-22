@@ -116,7 +116,7 @@ psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_cou
 psql communities -c "ALTER TABLE community_tracts ALTER COLUMN largest_group_proportion TYPE float USING largest_group_proportion::float"
 psql communities -c "ALTER TABLE community_tracts ADD COLUMN population_density int"
 # calc populatioln density using albers because mercator was just comprehensively awful for everything
-psql communities -c "UPDATE community_tracts SET population_density = round(total_population/(ST_Area(ST_Transform(wkb_geometry,2163))/1000000))"
+psql communities -c "UPDATE community_tracts SET population_density = round(total_population/(ST_Area(ST_Transform(wkb_geometry,2163))/1000000)) WHERE (ST_Area(ST_Transform(wkb_geometry,2163))/1000000) > 0"
 
 echo '------------dissolving and eroding community boundaries------------'
 psql communities -f ../../processing/form/form.sql
@@ -171,10 +171,12 @@ psql communities -c "\\copy (SELECT * FROM community_legend) TO STDOUT DELIMITER
 
 cp legend/community_legend.csv bubbles/
 
+# TODO fix static server and install phantomjs
+
 # EXPORT LEGEND TO PNG FOR LAYOUT
 cd legend/
 # START A WEB SERVER
-static -p 8000 "$output""$ext" &
+static-server -p 8000 "$output""$ext" &
 STATICPID=$!
 sleep 10
 echo 'waiting 10s for server to spin up'
@@ -188,7 +190,7 @@ cp legend.png ../exports/
 # EXPORT BUBBLE CHART TO PNG FOR LAYOUT
 cd ../bubbles/
 # START A WEB SERVER
-static -p 8000 "$output""$ext" &
+static-server -p 8000 "$output""$ext" &
 STATICPID=$!
 sleep 10
 echo 'waiting 10s for server to spin up'
