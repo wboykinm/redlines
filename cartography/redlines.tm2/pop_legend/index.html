@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- Generated with d3-generator.com -->
+<html>
+  <head>
+    <title>Continuous legend</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <style>
+      body {
+        background-color:rgba(255,255,255,0);
+        /*background-image: url('texture.png');*/
+      }
+      @font-face {
+        font-family: 'MAW';
+        src: url('MAW.ttf');
+      }
+      text {
+        font: 30px "MAW";
+        pointer-events: none;
+        text-transform: uppercase;
+        fill: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script>
+      var valueLabelWidth = 50; // space reserved for value labels (right)
+      var barHeight = 50; // height of one bar
+      var barWidth = 50;
+      var barLabelWidth = 350; // space reserved for bar labels
+      var barLabelPadding = 10; // padding between bar and bar labels (left)
+      var gridLabelHeight = 28; // space reserved for gridline labels
+      var gridChartOffset = 5; // space between start of grid and first bar
+      var maxBarWidth = 720; // width of the bar with the max value
+      var borderRadiusX = 18; 
+      var borderRadiusY = (18);
+      var popBins = [
+        { "bin":0, "opacity": 0},
+        { "bin":50, "opacity": 0.1},
+        { "bin":100, "opacity": 0.2},
+        { "bin":250, "opacity": 0.3},
+        { "bin":500, "opacity": 0.4},
+        { "bin":1000, "opacity": 0.5},
+        { "bin":2000, "opacity": 0.7},
+        { "bin":3000, "opacity": 0.8},
+        { "bin":5000, "opacity": 0.9},
+        { "bin":7500, "opacity": 1 }
+      ];
+      // svg container element
+      var chart = d3.select('#chart').append("svg")
+        .attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
+        .attr('height', gridLabelHeight + gridChartOffset + popBins.length * barHeight);
+      // grid line labels
+      var gridContainer = chart.append('g')
+        .attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')'); 
+      
+    </script>
+  </body>
+</html> 
