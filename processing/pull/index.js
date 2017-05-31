@@ -1,11 +1,10 @@
 // USAGE: node index.js <collectionType>
 var fs = require('fs');
-var through2Concurrent = require('through2-concurrent');
 var csv = require('fast-csv');
 var request = require('request');
 
 var collectionType = process.argv[2];
-var urlBase = 'http://api.census.gov/data/2010/';
+var urlBase = 'https://api.census.gov/data/2010/';
 var censusKey = process.argv[3];
 var stateFips = parseInt(process.argv[4]);
 var countyFips = parseInt(process.argv[5]);

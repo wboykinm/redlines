@@ -18,7 +18,7 @@ This map draws from [99 distinct ancestry/race/ethnicity/origin categories from 
 
 ## Data sources
  - [Census TIGER geographic boundaries - tract-level](data/cook_county_blocks.geojson)
- - [Census API SF1 and ACS](http://api.census.gov/data/2010/sf1/variables.html)
+ - [Census API SF1 and ACS](https://api.census.gov/data/2010/sf1/variables.html)
  - [OpenStreetmap reference data via Mapbox](http://www.openstreetmap.org/)    
 
 ## Processing steps
@@ -45,7 +45,7 @@ _(Sorry, things got out of hand)_
 - [Mercantile](https://github.com/mapbox/mercantile/blob/master/docs/cli.rst)
 - [geojson-merge](https://github.com/mapbox/geojson-merge)
 - [phantomjs](http://phantomjs.org/screen-capture.html) (to capture chart images)
-- Census [API key](http://api.census.gov/data/key_signup.html)
+- Census [API key](https://api.census.gov/data/key_signup.html)
 - [jq](https://stedolan.github.io/jq/) for json parsing in bash
 
 In theory this will work for any county in the country. Set location parameters as arguments in the order below:
