@@ -141,10 +141,10 @@ TRACTS=$MB_USER.rl_tracts_$STATE_ABBRV"_"$COUNTY_NAME
 
 echo '------------uploading geojson to mapbox data'
 export MAPBOX_ACCESS_TOKEN=$REDLINES_MB_TOKEN
-mapbox upload --name communities_polys $POLYS communities_polys.geojson
-mapbox upload --name communities_points $POINTS communities_points.geojson
-mapbox upload --name communities_mask $MASK communities_mask.geojson
-mapbox upload --name communities_tracts $TRACTS communities_tracts.geojson
+mapbox upload communities_polys.geojson $POLYS --name communities_polys 
+mapbox upload communities_points.geojson $POINTS --name communities_points 
+mapbox upload communities_mask.geojson $MASK --name communities_mask 
+mapbox upload communities_tracts.geojson $TRACTS --name communities_tracts 
 
 echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
 cd ../../cartography
