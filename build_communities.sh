@@ -60,17 +60,17 @@ wget -c ftp://ftp2.census.gov/geo/tiger/TIGER2015/TRACT/tl_2015_$STATE_FIPS"_tra
 unzip tl_2015_$STATE_FIPS"_tract.zip"
 ogr2ogr -t_srs "EPSG:4326" -f GeoJSON -where "COUNTYFP = '$COUNTY_FIPS'" tracts_$COUNTY_FIPS.geojson tl_2015_$STATE_FIPS"_tract.shp"
 
-echo '------------importing geodata (OSM water)------------'
-cd ../../processing/water
-npm install
-# get expanded bbox from tracts_$COUNTY_FIPS.geojson
-COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson)
-# pipe it through a tile cruncher
-echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt
-# . . . and then the mapbox api in 6x parallel to get geojson
-cat ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/ $TILES_MB_TOKEN
-# combine it all into one beastly geojson for the hell of it
-geojson-merge ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/osm_water*.geojson > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/all_osm_water.geojson
+#echo '------------importing geodata (OSM water)------------'
+#cd ../../processing/water
+#npm install
+## get expanded bbox from tracts_$COUNTY_FIPS.geojson
+#COMMUNITY_BBOX=$(node bbox.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson)
+## pipe it through a tile cruncher
+#echo $COMMUNITY_BBOX | mercantile tiles $TILE_ZOOM > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt
+## . . . and then the mapbox api in 6x parallel to get geojson
+#cat ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tiles.txt | parallel -j6 node get.js {} ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/ $TILES_MB_TOKEN
+## combine it all into one beastly geojson for the hell of it
+#geojson-merge ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/osm_water*.geojson > ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/all_osm_water.geojson
 
 echo '------------joining attributes to tract boundaries------------'
 cd ../../processing/join
@@ -78,7 +78,7 @@ npm install
 node index.js ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/tracts_$COUNTY_FIPS.geojson ../../data/tmp_$STATE_ABBRV"_"$COUNTY_NAME/community_properties_light.csv $STATE_ABBRV $COUNTY_NAME
 
 echo '------------moving it all into postgis------------'
-dropdb communities
+dropdb communities --if-exists
 createdb communities
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis"
 psql communities -c "CREATE EXTENSION IF NOT EXISTS postgis_topology"
@@ -87,25 +87,25 @@ psql communities -c "DROP TABLE IF EXISTS community_tracts"
 ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" community_tracts_$COUNTY_NAME.geojson -nln community_tracts -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
 psql communities -c "CREATE TABLE tracts_backfill AS (SELECT * FROM community_tracts)"
 
-echo '------------remove water polygons from the tract boundaries------------'
-for g in $(ls osm_water*.geojson); do
-  ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" $g -nln water_tile -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
-  # fix what polygons can be fixed
-  psql communities -c "DROP TABLE IF EXISTS valid_water"
-  psql communities -c "CREATE TABLE valid_water AS ( SELECT ST_Makevalid(wkb_geometry) AS the_geom FROM water_tile)"
-  # blow away the small ones
-  psql communities -c "DELETE FROM valid_water WHERE ST_Area( ST_Transform( the_geom, 3857 ) ) < 500000"
-  POND_COUNT=$(psql communities -t -c "SELECT count(*) FROM valid_water")
-  if [ $POND_COUNT = 0 ]; then 
-    echo "no large-ish water bodies"
-    psql communities -c "DROP TABLE IF EXISTS water_tile"
-    psql communities -c "DROP TABLE IF EXISTS valid_water"
-  else
-    psql communities -f ../../processing/water/piranha.sql
-    sleep 2
-    echo "chomped $POND_COUNT water bodies in tile $g"
-  fi
-done
+#echo '------------remove water polygons from the tract boundaries------------'
+#for g in $(ls osm_water*.geojson); do
+  #ogr2ogr -t_srs "EPSG:4326" -f "PostgreSQL" PG:"host=localhost dbname=communities" $g -nln water_tile -nlt PROMOTE_TO_MULTI -lco PRECISION=NO
+  ## fix what polygons can be fixed
+  #psql communities -c "DROP TABLE IF EXISTS valid_water"
+  #psql communities -c "CREATE TABLE valid_water AS ( SELECT ST_Makevalid(wkb_geometry) AS the_geom FROM water_tile)"
+  ## blow away the small ones
+  #psql communities -c "DELETE FROM valid_water WHERE ST_Area( ST_Transform( the_geom, 3857 ) ) < 500000"
+  #POND_COUNT=$(psql communities -t -c "SELECT count(*) FROM valid_water")
+  #if [ $POND_COUNT = 0 ]; then 
+    #echo "no large-ish water bodies"
+    #psql communities -c "DROP TABLE IF EXISTS water_tile"
+    #psql communities -c "DROP TABLE IF EXISTS valid_water"
+  #else
+    #psql communities -f ../../processing/water/piranha.sql
+    #sleep 2
+    #echo "chomped $POND_COUNT water bodies in tile $g"
+  #fi
+#done
 psql communities -c "DROP TABLE IF EXISTS backfilled_tracts"
 psql communities -c "CREATE TABLE backfilled_tracts AS (SELECT * FROM tracts_backfill WHERE geoid NOT IN (SELECT geoid FROM community_tracts) UNION ALL SELECT * FROM community_tracts)"
 psql communities -c "DROP TABLE IF EXISTS community_tracts"
@@ -133,76 +133,83 @@ ogr2ogr -f "GeoJSON" communities_polys.geojson PG:"host=localhost dbname=communi
 ogr2ogr -f "GeoJSON" communities_points.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_centroids WHERE largest_group_count IS NOT NULL AND total_population IS NOT NULL"
 ogr2ogr -f "GeoJSON" communities_mask.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_mask"
 ogr2ogr -f "GeoJSON" communities_tracts.geojson PG:"host=localhost dbname=communities" -sql "SELECT * from community_tracts WHERE largest_group_count > 0 AND total_population > 0"
+
+##########################################################################
+# NEW THING: build map using d3js:
+##########################################################################
+
+##########################################################################
+
 # DEFINE DATA LAYER NAMES
-POLYS=$MB_USER.rl_$STATE_ABBRV"_"$COUNTY_NAME
-POINTS=$MB_USER.rl_points_$STATE_ABBRV"_"$COUNTY_NAME
-MASK=$MB_USER.rl_mask_$STATE_ABBRV"_"$COUNTY_NAME
-TRACTS=$MB_USER.rl_tracts_$STATE_ABBRV"_"$COUNTY_NAME
-
-echo '------------uploading geojson to mapbox data'
-export MAPBOX_ACCESS_TOKEN=$REDLINES_MB_TOKEN
-mapbox upload communities_polys.geojson $POLYS --name communities_polys 
-mapbox upload communities_points.geojson $POINTS --name communities_points 
-mapbox upload communities_mask.geojson $MASK --name communities_mask 
-mapbox upload communities_tracts.geojson $TRACTS --name communities_tracts 
-
-echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
-cd ../../cartography
-# CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
-rm -rf rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
-cp -r redlines.tm2 rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
-
-# GET CENTROID OF COUNTY
-COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
-COUNTY_LON=$(psql communities -t -c "SELECT ST_X(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
-
-# REWRITE PROJECT CONFIG FILES
-cd rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
-sed -i tmp2.bak "s/name: Tribes/name: Tribes - $COUNTY_NAME, $STATE_NAME/g" project.yml
-sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
-sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
-sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
-sed -i tmp3.bak "s/landplanner.placeholder/$TRACTS/g" project.yml
-sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
-sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
+#POLYS=$MB_USER.rl_$STATE_ABBRV"_"$COUNTY_NAME
+#POINTS=$MB_USER.rl_points_$STATE_ABBRV"_"$COUNTY_NAME
+#MASK=$MB_USER.rl_mask_$STATE_ABBRV"_"$COUNTY_NAME
+#TRACTS=$MB_USER.rl_tracts_$STATE_ABBRV"_"$COUNTY_NAME
+#
+#echo '------------uploading geojson to mapbox data'
+#export MAPBOX_ACCESS_TOKEN=$REDLINES_MB_TOKEN
+#mapbox upload communities_polys.geojson $POLYS --name communities_polys 
+#mapbox upload communities_points.geojson $POINTS --name communities_points 
+#mapbox upload communities_mask.geojson $MASK --name communities_mask 
+#mapbox upload communities_tracts.geojson $TRACTS --name communities_tracts 
+#
+#echo "------------creating mapbox studio projects for $STATE_NAME county $COUNTY_FIPS------------"
+#cd ../../cartography
+## CREATE A COUNTY-SPECIFIC MAPBOX STUDIO CLASSIC PROJECT
+#rm -rf rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
+#cp -r redlines.tm2 rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2
+#
+## GET CENTROID OF COUNTY
+#COUNTY_LAT=$(psql communities -t -c "SELECT ST_Y(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
+#COUNTY_LON=$(psql communities -t -c "SELECT ST_X(ST_Centroid(ST_Collect(the_geom))) FROM community_polys")
+#
+## REWRITE PROJECT CONFIG FILES
+#cd rl_$STATE_ABBRV"_"$COUNTY_NAME.tm2/
+#sed -i tmp2.bak "s/name: Tribes/name: Tribes - $COUNTY_NAME, $STATE_NAME/g" project.yml
+#sed -i tmp3.bak "s/landplanner.0xsgug3g/$POLYS/g" project.yml
+#sed -i tmp3.bak "s/landplanner.69rz84n1/$POINTS/g" project.yml
+#sed -i tmp3.bak "s/landplanner.0ufuyubk/$MASK/g" project.yml
+#sed -i tmp3.bak "s/landplanner.placeholder/$TRACTS/g" project.yml
+#sed -i tmp4.bak "s/- -118.2437/-$COUNTY_LON/g" project.yml
+#sed -i tmp5.bak "s/- 34.0522/-$COUNTY_LAT/g" project.yml
 
 # EXPORT LEGEND WITH EMPTY GROUPS REMOVED
 psql communities -c "\\copy (SELECT * FROM community_legend) TO STDOUT DELIMITER ',' CSV HEADER" | csvgrep -c 2 -r '\S' > legend/community_legend.csv 
 
 cp legend/community_legend.csv bubbles/
 
-# TODO fix static server and install phantomjs
-
 # EXPORT LEGEND TO PNG FOR LAYOUT
-cd legend/
+#cd legend/
 # START A WEB SERVER
-static-server -p 8000 "$output""$ext" &
-STATICPID=$!
-sleep 10
-echo 'waiting 10s for server to spin up'
+#static-server -p 8000 "$output""$ext" &
+#STATICPID=$!
+#sleep 10
+#echo 'waiting 10s for server to spin up'
 # EXPORT THE IMAGE
-phantomjs rasterize.js http://localhost:8000/index.html legend.png
+# TODO rip out phantomjs, use puppeteer: https://github.com/ebidel/try-puppeteer
+
+#phantomjs rasterize.js http://localhost:8000/index.html legend.png
 # KILL THE WEBSERVER
-kill -s 9 $STATICPID
-cp legend.png ../img/
-cp legend.png ../exports/
+#kill -s 9 $STATICPID
+#cp legend.png ../img/
+#cp legend.png ../exports/
 
 # EXPORT BUBBLE CHART TO PNG FOR LAYOUT
-cd ../bubbles/
+#cd ../bubbles/
 # START A WEB SERVER
-static-server -p 8000 "$output""$ext" &
-STATICPID=$!
-sleep 10
-echo 'waiting 10s for server to spin up'
-# EXPORT THE IMAGE
-phantomjs rasterize.js http://localhost:8000/index.html bubbles.png
-# KILL THE WEBSERVER
-kill -s 9 $STATICPID
-cp bubbles.png ../img/
-cp bubbles.png ../exports/
-cd ../../../
+#static-server -p 8000 "$output""$ext" &
+#STATICPID=$!
+#sleep 10
+#echo 'waiting 10s for server to spin up'
+## EXPORT THE IMAGE
+#phantomjs rasterize.js http://localhost:8000/index.html bubbles.png
+## KILL THE WEBSERVER
+#kill -s 9 $STATICPID
+#cp bubbles.png ../img/
+#cp bubbles.png ../exports/
+#cd ../../../
 
 # CLEAR OUT THE TEMP DATA TO SAVE SPACE
-rm -rf data/tmp/
+#rm -rf data/tmp/
 
-echo "------------done! go add the project to mapbox studio and you're off to the races!------------"
+#echo "------------done! go add the project to mapbox studio and you're off to the races!------------"
